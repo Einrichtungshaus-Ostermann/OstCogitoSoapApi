@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace OstCogitoSoapApi\Controllers\Backend;
+namespace OstCogitoSoapApi\Controller\Backend;
 
 use OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\Order\CogitoOrderNumber;
 use OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\Printer\CogitoPrinter;
