@@ -64,6 +64,7 @@ class GetDefaultPrinterRequest extends BaseApiRequest
 
     /**
      * @return array|null
+     * @throws \Exception
      */
     public function getResult()
     {

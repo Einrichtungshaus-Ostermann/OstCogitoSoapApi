@@ -6,9 +6,9 @@ use OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\Order\CogitoOrderNumber;
 use OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\Printer\CogitoPrinter;
 use OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\Printer\GetAllPrinterRequest;
 use OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\Printer\PrintOrderRequest;
+use Psr\Container\ContainerInterface;
 use ReflectionClass;
 use RuntimeException;
-use Shopware\Components\DependencyInjection\Container;
 
 class SoapApiRequestService
 {
@@ -21,7 +21,7 @@ class SoapApiRequestService
 
 
 
-    /** @var Container */
+    /** @var ContainerInterface */
     private $container;
 
 
@@ -29,11 +29,11 @@ class SoapApiRequestService
     /**
      * RequestType constructor.
      *
-     * @param Container $container
+     * @param ContainerInterface $container
      *
      * @internal param string $requestType
      */
-    public function __construct(Container $container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }

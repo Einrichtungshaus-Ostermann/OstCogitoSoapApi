@@ -48,6 +48,7 @@ class GetAllPrinterRequest extends BaseApiRequest
      * @param null|array $printersResult
      *
      * @return CogitoPrinter[]
+     * @throws \Exception
      */
     public function getPrinterArray($printersResult = null): array
     {
