@@ -1,0 +1,15 @@
+{
+  "name": "ost/cogito-soap-api",
+  "license": "proprietary",
+  "type": "shopware-plugin",
+  "require": {
+    "ext-soap": "*"
+  },
+  "extra": {
+    "installer-name": "OstCogitoSoapApi"
+  },
+  "scripts": {
+    "test": "phpunit -c tests/ --colors=always",
+    "test-unit": "phpunit -c tests/phpunit_unit.xml --colors=always"
+  }
+}

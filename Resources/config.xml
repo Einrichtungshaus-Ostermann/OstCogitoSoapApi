@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../engine/Shopware/Components/Plugin/schema/config.xsd">
+
+    <elements>
+        <element type="text" required="true" scope="shop">
+            <name>wsdlPath</name>
+            <label>WSDL Pfad</label>
+        </element>
+        <element type="number" required="true" scope="shop">
+            <name>companyNumber</name>
+            <label>Firmennummer</label>
+        </element>
+        <element type="text" required="true">
+            <name>serverAddress</name>
+            <label>Serveraddresse</label>
+
+        </element>
+        <element type="select" required="true">
+            <name>serverEnvironment</name>
+            <label>Umgebung</label>
+            <store>
+                <option>
+                    <value>OST_ECHT</value>
+                    <label>OST_ECHT</label>
+                </option>
+                <option>
+                    <value>OST_QSK</value>
+                    <label>OST_QSK</label>
+                </option>
+                <option>
+                    <value>OST_QSC</value>
+                    <label>OST_QSC</label>
+                </option>
+            </store>
+        </element>
+        <element type="boolean" required="false">
+            <name>testModeEnabled</name>
+            <label>Testmodus</label>
+        </element>
+        <element type="text" required="false">
+            <name>testPrinter</name>
+            <label>Testdrucker</label>
+        </element>
+        <element type="text" required="false">
+            <name>testOrdernumber</name>
+            <label>Test Bestellnummer</label>
+        </element>
+    </elements>
+
+</config>
