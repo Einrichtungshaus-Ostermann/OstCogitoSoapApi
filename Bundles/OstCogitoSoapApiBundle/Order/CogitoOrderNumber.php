@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\Order;
+namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order;
 
 class CogitoOrderNumber
 {

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- BitskiThemeFix/Resources/services.xml -->
-
 <container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xmlns="http://symfony.com/schema/dic/services"
            xsi:schemaLocation="http://symfony.com/schema/dic/services
         http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <!-- Custom Services -->
-        <service id="cogito_soap_api.soap_api_request_service"
-                 class="OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\SoapApiRequestService">
-            <argument type="service" id="service_container"/>
+        <service id="ost_cogito_soap_api.soap_api_request_service"
+                 class="OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\SoapApiRequestService">
         </service>
 
+        <service id="ost_cogito_soap_api.cogito_api_service"
+                 class="OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\CogitoApiService">
+            <argument type="service" id="ost_cogito_soap_api.soap_api_request_service"/>
+        </service>
     </services>
 </container>

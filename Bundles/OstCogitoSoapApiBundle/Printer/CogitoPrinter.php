@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\Printer;
+namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer;
 
 use Exception;
 

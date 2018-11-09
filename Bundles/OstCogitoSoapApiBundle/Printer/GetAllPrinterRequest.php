@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\Printer;
+namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer;
 
-use OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\BaseApiRequest;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\BaseApiRequest;
 
 class GetAllPrinterRequest extends BaseApiRequest
 {
@@ -84,9 +84,9 @@ class GetAllPrinterRequest extends BaseApiRequest
         if ($this->isValidResponse($result)) {
             $processedResult = $this->removeStdClass($result);
 
-            if (isset($processedResult['GetAllPrintersResult'], $processedResult['GetAllPrintersResult']['Printer'])) {
+            if (isset($processedResult['GetAllPrintersResult']['Printer'])) {
                 /* @var array $printersResult */
-                return $processedResult['GetAllPrintersResult']['Printer'];
+                return $this->trimArray($processedResult['GetAllPrintersResult']['Printer']);
             }
         }
 

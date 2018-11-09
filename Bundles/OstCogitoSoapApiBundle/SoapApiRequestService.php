@@ -1,42 +1,27 @@
 <?php declare(strict_types=1);
 
-namespace OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle;
+namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle;
 
-use OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\Order\CogitoOrderNumber;
-use OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\Printer\CogitoPrinter;
-use OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\Printer\GetAllPrinterRequest;
-use OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\Printer\PrintOrderRequest;
-use Psr\Container\ContainerInterface;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order\CogitoOrderNumber;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer\CogitoPrinter;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer\GetAllPrinterRequest;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer\GetDefaultPrinterRequest;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer\PrintOrderRequest;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer\SetDefaultPrinterRequest;
 use ReflectionClass;
 use RuntimeException;
 
 class SoapApiRequestService
 {
     const GET_ALL_PRINTER = GetAllPrinterRequest::class;
+    const GET_DEFAULT_PRINTER = GetDefaultPrinterRequest::class;
+    const SET_DEFAULT_PRINTER = SetDefaultPrinterRequest::class;
     const PRINT_ORDER = PrintOrderRequest::class;
 
 
 
-    private $allTypes = [self::GET_ALL_PRINTER, self::PRINT_ORDER];
-
-
-
-    /** @var ContainerInterface */
-    private $container;
-
-
-
-    /**
-     * RequestType constructor.
-     *
-     * @param ContainerInterface $container
-     *
-     * @internal param string $requestType
-     */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
+    private $allTypes = [self::GET_ALL_PRINTER, self::GET_DEFAULT_PRINTER, self::SET_DEFAULT_PRINTER,
+                         self::PRINT_ORDER];
 
 
 

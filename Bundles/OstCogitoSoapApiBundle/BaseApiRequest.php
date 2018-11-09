@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle;
+namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle;
 
 use SoapClient;
 use SoapVar;
@@ -47,6 +47,21 @@ abstract class BaseApiRequest implements ApiRequestInterface
         }
     }
 
+
+
+    public function trimArray(array $array)
+    {
+        $newArray = [];
+        foreach ($array as $key => &$value) {
+            if (is_array($value)) {
+                $newArray[trim((string)$key)] = $this->trimArray($value);
+            } else {
+                $newArray[trim((string)$key)] = trim((string)$value);
+            }
+        }
+
+        return $newArray;
+    }
 
 
     public function removeStdClass($result): array

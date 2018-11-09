@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\Printer;
+namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer;
 
-use OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\BaseApiRequest;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\BaseApiRequest;
 
-class SetDefaultPrinterRequest extends BaseApiRequest
+class GetDefaultPrinterRequest extends BaseApiRequest
 {
     /**
      * @var string
@@ -42,23 +42,15 @@ class SetDefaultPrinterRequest extends BaseApiRequest
 
 
     /**
-     * @var CogitoPrinter
-     */
-    private $printer;
-
-
-
-    /**
-     * SetDefaultPrinterRequest constructor.
+     * GetDefaultPrinterRequest constructor.
      *
      * @param string $companyNumber
      * @param string $serverAddress
      * @param string $serverEnvironment
      * @param string $user
      * @param string $function
-     * @param CogitoPrinter $printer
      */
-    public function __construct(string $companyNumber, string $serverAddress, string $serverEnvironment, string $user, string $function, CogitoPrinter $printer)
+    public function __construct(string $companyNumber, string $serverAddress, string $serverEnvironment, string $user, string $function)
     {
         parent::__construct();
         $this->companyNumber = $companyNumber;
@@ -66,7 +58,6 @@ class SetDefaultPrinterRequest extends BaseApiRequest
         $this->serverEnvironment = $serverEnvironment;
         $this->user = $user;
         $this->function = $function;
-        $this->printer = $printer;
     }
 
 
@@ -82,7 +73,7 @@ class SetDefaultPrinterRequest extends BaseApiRequest
         if ($this->isValidResponse($result)) {
             $processedResult = $this->removeStdClass($result);
 
-//            if (isset($processedResult['SetDefaultPrinter'], $processedResult['GetAllPrintersResult']['Printer'])) {
+//            if (isset($processedResult['GetDefaultPrinter'], $processedResult['GetAllPrintersResult']['Printer'])) {
 //                /** @var array $printersResult */
 //                return $processedResult['GetAllPrintersResult']['Printer'];
 //            }
@@ -97,23 +88,21 @@ class SetDefaultPrinterRequest extends BaseApiRequest
 
     public function getRequestXML(): string
     {
-        return '<tem:SetDefaultPrinter xmlns:ikv="http://schemas.datacontract.org/2004/07/IKVOrderImport" xmlns:tem="http://tempuri.org/">
+        return '<tem:GetDefaultPrinter xmlns:ikv="http://schemas.datacontract.org/2004/07/IKVOrderImport" xmlns:tem="http://tempuri.org/">
                         <tem:request>
-                            <ikv:Dtyp>' . $this->printer->getType() . '</ikv:Dtyp>
-                            <ikv:Prnt>' . $this->printer->getKey() . '</ikv:Prnt>
                             <ikv:Bnzn>' . $this->user . '</ikv:Bnzn>
                             <ikv:Funk>' . $this->function . '</ikv:Funk>
                             <ikv:Firm>' . $this->companyNumber . '</ikv:Firm>
                             <ikv:Server>' . $this->serverAddress . '</ikv:Server>
                             <ikv:Umgebung>' . $this->serverEnvironment . '</ikv:Umgebung>
                         </tem:request>
-                     </tem:SetDefaultPrinter>';
+                     </tem:GetDefaultPrinter>';
     }
 
 
 
     public function getRequestMethod(): string
     {
-        return 'SetDefaultPrinter';
+        return 'GetDefaultPrinter';
     }
 }

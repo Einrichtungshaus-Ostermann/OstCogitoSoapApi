@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\Printer;
+namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer;
 
-use OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\BaseApiRequest;
-use OstCogitoSoapApi\Bundles\CogitoSoapAPIBundle\Order\CogitoOrderNumber;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\BaseApiRequest;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order\CogitoOrderNumber;
 
 class PrintOrderRequest extends BaseApiRequest
 {
