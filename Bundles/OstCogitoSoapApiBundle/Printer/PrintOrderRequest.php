@@ -13,12 +13,10 @@ class PrintOrderRequest extends BaseApiRequest
     private $companyNumber;
 
 
-
     /**
      * @var string
      */
     private $serverAddress;
-
 
 
     /**
@@ -27,19 +25,16 @@ class PrintOrderRequest extends BaseApiRequest
     private $serverEnvironment;
 
 
-
     /**
      * @var CogitoPrinter
      */
     private $printer;
 
 
-
     /**
      * @var CogitoOrderNumber
      */
     private $orderNumber;
-
 
 
     /**
@@ -62,7 +57,6 @@ class PrintOrderRequest extends BaseApiRequest
     }
 
 
-
     /**
      * @return array|null
      * @throws \Exception
@@ -73,7 +67,6 @@ class PrintOrderRequest extends BaseApiRequest
 
         return $this->removeStdClass($result);
     }
-
 
 
     public function getRequestXML(): string
@@ -90,7 +83,6 @@ class PrintOrderRequest extends BaseApiRequest
                     </tem:request>
                 </tem:PrintOrderData>';
     }
-
 
 
     public function getRequestMethod(): string

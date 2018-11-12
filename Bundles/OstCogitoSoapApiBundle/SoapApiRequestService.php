@@ -3,6 +3,7 @@
 namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle;
 
 use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order\CogitoOrderNumber;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order\PutOrderRequest;
 use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer\CogitoPrinter;
 use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer\GetAllPrinterRequest;
 use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer\GetDefaultPrinterRequest;
@@ -13,16 +14,15 @@ use RuntimeException;
 
 class SoapApiRequestService
 {
-    const GET_ALL_PRINTER = GetAllPrinterRequest::class;
-    const GET_DEFAULT_PRINTER = GetDefaultPrinterRequest::class;
-    const SET_DEFAULT_PRINTER = SetDefaultPrinterRequest::class;
-    const PRINT_ORDER = PrintOrderRequest::class;
-
+    public const GET_ALL_PRINTER = GetAllPrinterRequest::class;
+    public const GET_DEFAULT_PRINTER = GetDefaultPrinterRequest::class;
+    public const SET_DEFAULT_PRINTER = SetDefaultPrinterRequest::class;
+    public const PRINT_ORDER = PrintOrderRequest::class;
+    public const PUT_ORDER = PutOrderRequest::class;
 
 
     private $allTypes = [self::GET_ALL_PRINTER, self::GET_DEFAULT_PRINTER, self::SET_DEFAULT_PRINTER,
-                         self::PRINT_ORDER];
-
+        self::PRINT_ORDER, self::PUT_ORDER];
 
 
     /**

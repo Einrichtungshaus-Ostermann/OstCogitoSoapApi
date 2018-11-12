@@ -16,12 +16,10 @@ class CogitoApiService
     private $soapApiRequestService;
 
 
-
     public function __construct(SoapApiRequestService $soapApiRequestService)
     {
         $this->soapApiRequestService = $soapApiRequestService;
     }
-
 
 
     /**
@@ -37,7 +35,7 @@ class CogitoApiService
 
         /** @var PrintOrderRequest $printOrderRequest */
         $printOrderRequest = $this->soapApiRequestService->getRequest(SoapApiRequestService::PRINT_ORDER, [
-            'printer'     => $cogitoPrinter,
+            'printer' => $cogitoPrinter,
             'orderNumber' => $cogitoOrderNumber
         ]);
 
@@ -47,7 +45,6 @@ class CogitoApiService
 
         return $printOrderRequest->getResult();
     }
-
 
 
     /**
@@ -67,7 +64,6 @@ class CogitoApiService
     }
 
 
-
     /**
      * @param string $user
      * @param string $function
@@ -78,7 +74,7 @@ class CogitoApiService
     {
         /** @var GetAllPrinterRequest $getAllPrinterRequest */
         $getAllPrinterRequest = $this->soapApiRequestService->getRequest(SoapApiRequestService::GET_DEFAULT_PRINTER, [
-            'user'     => $user,
+            'user' => $user,
             'function' => $function
         ]);
 
@@ -88,7 +84,6 @@ class CogitoApiService
 
         return $getAllPrinterRequest->getResult();
     }
-
 
 
     /**
@@ -105,9 +100,9 @@ class CogitoApiService
 
         /** @var GetAllPrinterRequest $getAllPrinterRequest */
         $getAllPrinterRequest = $this->soapApiRequestService->getRequest(SoapApiRequestService::SET_DEFAULT_PRINTER, [
-            'user'     => $user,
+            'user' => $user,
             'function' => $function,
-            'printer'  => $cogitoPrinter,
+            'printer' => $cogitoPrinter,
         ]);
 
         if ($getAllPrinterRequest === null) {

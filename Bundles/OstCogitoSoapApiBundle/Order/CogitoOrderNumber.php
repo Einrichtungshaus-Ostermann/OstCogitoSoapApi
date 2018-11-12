@@ -10,12 +10,10 @@ class CogitoOrderNumber
     private $orderNumber;
 
 
-
     /**
      * @var array
      */
     private $decomposedValues;
-
 
 
     /**
@@ -29,19 +27,16 @@ class CogitoOrderNumber
     }
 
 
-
     public function getOrderTerm()
     {
         return $this->getSalehouseNumber() . '-' . $this->getSection() . '-' . $this->getOrderNumber();
     }
 
 
-
     public function getSalehouseNumber()
     {
         return $this->decomposeOrderNumber()['salehousenumber'];
     }
-
 
 
     /**
@@ -60,20 +55,18 @@ class CogitoOrderNumber
 
         $this->decomposedValues = [
             'salehousenumber' => substr($this->orderNumber, 0, 2),
-            'section'         => $this->orderNumber[2],
-            'ordernumber'     => substr($this->orderNumber, 3, 6)
+            'section' => $this->orderNumber[2],
+            'ordernumber' => substr($this->orderNumber, 3, 6)
         ];
 
         return $this->decomposedValues;
     }
 
 
-
     public function getSection()
     {
         return $this->decomposeOrderNumber()['section'];
     }
-
 
 
     /**
@@ -83,7 +76,6 @@ class CogitoOrderNumber
     {
         return $this->decomposeOrderNumber()['ordernumber'];
     }
-
 
 
     /**

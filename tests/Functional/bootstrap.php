@@ -49,7 +49,6 @@ class TestKernel extends \Shopware\Kernel
     }
 
 
-
     protected function getConfigPath()
     {
         return __DIR__ . '/config.php';

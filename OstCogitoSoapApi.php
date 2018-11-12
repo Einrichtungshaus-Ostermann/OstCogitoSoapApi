@@ -26,7 +26,6 @@ class OstCogitoSoapApi extends Plugin
     const NS_COGITO_DATA_ORDER = 'CogitoRetailWeb.Data.Order';
 
 
-
     /**
      * ...
      *
@@ -43,7 +42,6 @@ class OstCogitoSoapApi extends Plugin
     }
 
 
-
     /**
      * Activate the plugin.
      *
@@ -54,7 +52,6 @@ class OstCogitoSoapApi extends Plugin
         // clear complete cache after we activated the plugin
         $context->scheduleClearCache($context::CACHE_LIST_ALL);
     }
-
 
 
     /**
@@ -87,7 +84,6 @@ class OstCogitoSoapApi extends Plugin
     }
 
 
-
     /**
      * Update the plugin.
      *
@@ -105,7 +101,6 @@ class OstCogitoSoapApi extends Plugin
         // call default updater
         parent::update($context);
     }
-
 
 
     /**

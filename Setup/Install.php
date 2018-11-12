@@ -27,14 +27,12 @@ class Install
     protected $plugin;
 
 
-
     /**
      * ...
      *
      * @var InstallContext
      */
     protected $context;
-
 
 
     /**
@@ -45,14 +43,12 @@ class Install
     protected $modelManager;
 
 
-
     /**
      * ...
      *
      * @var CrudService
      */
     protected $crudService;
-
 
 
     /**
@@ -71,7 +67,6 @@ class Install
         $this->modelManager = $modelManager;
         $this->crudService = $crudService;
     }
-
 
 
     /**

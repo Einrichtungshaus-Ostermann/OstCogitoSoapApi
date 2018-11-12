@@ -10,12 +10,10 @@ class CogitoPrinter
     const PRINTER_TYPE_MULTIPLEX = 'M';
 
 
-
     /**
      * @var string
      */
     private $key;
-
 
 
     /**
@@ -24,12 +22,10 @@ class CogitoPrinter
     private $description;
 
 
-
     /**
      * @var string
      */
     private $type;
-
 
 
     /**
@@ -48,7 +44,43 @@ class CogitoPrinter
         $this->setType(strtoupper($type));
     }
 
+    /**
+     * Gibt die Instanz als  assoziatives Array zurück.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'key' => $this->getKey(),
+            'description' => $this->getDescription(),
+            'type' => $this->getType()
+        ];
+    }
 
+    /**
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @param string $key
+     */
+    public function setKey($key)
+    {
+        $this->key = trim($key);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
     /**
      * @param string $description
@@ -58,7 +90,13 @@ class CogitoPrinter
         $this->description = trim($description);
     }
 
-
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 
     /**
      * @param string $type
@@ -77,61 +115,5 @@ class CogitoPrinter
                 throw new Exception('Unknown printer type "' . $typeToUpper . '"', 1001);
                 break;
         }
-    }
-
-
-
-    /**
-     * Gibt die Instanz als  assoziatives Array zurück.
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return [
-            'key'         => $this->getKey(),
-            'description' => $this->getDescription(),
-            'type'        => $this->getType()
-        ];
-    }
-
-
-
-    /**
-     * @return string
-     */
-    public function getKey()
-    {
-        return $this->key;
-    }
-
-
-
-    /**
-     * @param string $key
-     */
-    public function setKey($key)
-    {
-        $this->key = trim($key);
-    }
-
-
-
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 }

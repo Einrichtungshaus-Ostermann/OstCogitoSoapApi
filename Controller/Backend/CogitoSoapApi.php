@@ -31,7 +31,6 @@ class CogitoSoapApi extends Shopware_Controllers_Backend_ExtJs implements \Shopw
     }
 
 
-
     public function getDefaultPrinterAction()
     {
         $apiService = $this->container->get('ost_cogito_soap_api.cogito_api_service');
@@ -40,9 +39,8 @@ class CogitoSoapApi extends Shopware_Controllers_Backend_ExtJs implements \Shopw
 
         /* @noinspection PhpParamsInspection */
         $this->View()->assign(['success' => true, 'data' => $defaultPrinterResult,
-                               'total'   => count($defaultPrinterResult)]);
+            'total' => count($defaultPrinterResult)]);
     }
-
 
 
     public function setDefaultPrinterAction()
@@ -53,7 +51,7 @@ class CogitoSoapApi extends Shopware_Controllers_Backend_ExtJs implements \Shopw
 
         /* @noinspection PhpParamsInspection */
         $this->View()->assign(['success' => true, 'data' => $defaultPrinterResult,
-                               'total'   => count($defaultPrinterResult)]);
+            'total' => count($defaultPrinterResult)]);
     }
 
     /**

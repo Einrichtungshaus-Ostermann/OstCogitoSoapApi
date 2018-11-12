@@ -12,12 +12,10 @@ class GetDefaultPrinterRequest extends BaseApiRequest
     private $companyNumber;
 
 
-
     /**
      * @var string
      */
     private $serverAddress;
-
 
 
     /**
@@ -26,19 +24,16 @@ class GetDefaultPrinterRequest extends BaseApiRequest
     private $serverEnvironment;
 
 
-
     /**
      * @var string
      */
     private $user;
 
 
-
     /**
      * @var string
      */
     private $function;
-
 
 
     /**
@@ -59,7 +54,6 @@ class GetDefaultPrinterRequest extends BaseApiRequest
         $this->user = $user;
         $this->function = $function;
     }
-
 
 
     /**
@@ -85,7 +79,6 @@ class GetDefaultPrinterRequest extends BaseApiRequest
     }
 
 
-
     public function getRequestXML(): string
     {
         return '<tem:GetDefaultPrinter xmlns:ikv="http://schemas.datacontract.org/2004/07/IKVOrderImport" xmlns:tem="http://tempuri.org/">
@@ -98,7 +91,6 @@ class GetDefaultPrinterRequest extends BaseApiRequest
                         </tem:request>
                      </tem:GetDefaultPrinter>';
     }
-
 
 
     public function getRequestMethod(): string

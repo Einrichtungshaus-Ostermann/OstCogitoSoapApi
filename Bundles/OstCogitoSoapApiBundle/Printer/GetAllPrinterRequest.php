@@ -12,19 +12,16 @@ class GetAllPrinterRequest extends BaseApiRequest
     private $companyNumber;
 
 
-
     /**
      * @var string
      */
     private $serverAddress;
 
 
-
     /**
      * @var string
      */
     private $serverEnvironment;
-
 
 
     /**
@@ -41,7 +38,6 @@ class GetAllPrinterRequest extends BaseApiRequest
         $this->serverAddress = $serverAddress;
         $this->serverEnvironment = $serverEnvironment;
     }
-
 
 
     /**
@@ -72,7 +68,6 @@ class GetAllPrinterRequest extends BaseApiRequest
     }
 
 
-
     /**
      * @return array|null
      * @throws \Exception
@@ -94,7 +89,6 @@ class GetAllPrinterRequest extends BaseApiRequest
     }
 
 
-
     public function getRequestXML(): string
     {
         return '<tem:GetAllPrinters xmlns:ikv="http://schemas.datacontract.org/2004/07/IKVOrderImport" xmlns:tem="http://tempuri.org/">
@@ -105,7 +99,6 @@ class GetAllPrinterRequest extends BaseApiRequest
                         </tem:request>
                      </tem:GetAllPrinters>';
     }
-
 
 
     public function getRequestMethod(): string
