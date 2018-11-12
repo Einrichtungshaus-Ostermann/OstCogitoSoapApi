@@ -116,6 +116,8 @@ class OrderPosition implements SoapApiPart
      */
     protected $serviceLevel;
 
+
+
     /**
      * OrderPosition constructor.
      * @param int $mainPositionNumber
@@ -139,8 +141,9 @@ class OrderPosition implements SoapApiPart
      * @param string $desiredDate
      * @param string $desiredDateType
      * @param string $deliveryNote
+     * @param string $serviceLevel
      */
-    public function __construct(int $mainPositionNumber, int $subPositionNumber, float $amount, int $companyNumber, int $articleNumber, int $variationNumber, string $variationInformationAsText, float $pickupPrice, string $positionType, int $ean, string $manufacturerArticleNumber, string $xcaliburConfigurationId, string $xcaliburGeometryId, string $productId, int $consultantNumber, int $provisionKey, string $Anla, int $shippingType, string $desiredDate, string $desiredDateType, string $deliveryNote)
+    public function __construct(int $mainPositionNumber, int $subPositionNumber, float $amount, int $companyNumber, int $articleNumber, int $variationNumber, string $variationInformationAsText, float $pickupPrice, string $positionType, int $ean, string $manufacturerArticleNumber, string $xcaliburConfigurationId, string $xcaliburGeometryId, string $productId, int $consultantNumber, int $provisionKey, string $Anla, int $shippingType, string $desiredDate, string $desiredDateType, string $deliveryNote, string $serviceLevel)
     {
         $this->mainPositionNumber = $mainPositionNumber;
         $this->subPositionNumber = $subPositionNumber;
@@ -163,7 +166,9 @@ class OrderPosition implements SoapApiPart
         $this->desiredDate = $desiredDate;
         $this->desiredDateType = $desiredDateType;
         $this->deliveryNote = $deliveryNote;
+        $this->serviceLevel = $serviceLevel;
     }
+
 
 
     /**

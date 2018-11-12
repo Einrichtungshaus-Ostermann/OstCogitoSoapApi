@@ -86,8 +86,10 @@ abstract class AbstractAddress implements SoapApiPart
      */
     protected $street;
 
+
+
     /**
-     * Adresse constructor.
+     * AbstractAddress constructor.
      * @param string $birthday
      * @param string $city
      * @param string $company
@@ -95,9 +97,9 @@ abstract class AbstractAddress implements SoapApiPart
      * @param string $email
      * @param string $firstName
      * @param string $floor
-     * @param string $housenumber
+     * @param string $houseNumber
      * @param string $lastName
-     * @param bool $nljn
+     * @param bool $receiveNewsletter
      * @param string $phoneMobile
      * @param string $phonePrivate
      * @param string $phoneWork
@@ -105,7 +107,7 @@ abstract class AbstractAddress implements SoapApiPart
      * @param string $salutation
      * @param string $street
      */
-    public function __construct(string $birthday, string $city, string $company, string $countryCode, string $email, string $firstName, string $floor, string $housenumber, string $lastName, bool $nljn, string $phoneMobile, string $phonePrivate, string $phoneWork, int $postalCode, string $salutation, string $street)
+    public function __construct(string $birthday, string $city, string $company, string $countryCode, string $email, string $firstName, string $floor, string $houseNumber, string $lastName, bool $receiveNewsletter, string $phoneMobile, string $phonePrivate, string $phoneWork, int $postalCode, string $salutation, string $street)
     {
         $this->birthday = $birthday;
         $this->city = $city;
@@ -114,9 +116,9 @@ abstract class AbstractAddress implements SoapApiPart
         $this->email = $email;
         $this->firstName = $firstName;
         $this->floor = $floor;
-        $this->houseNumber = $housenumber;
+        $this->houseNumber = $houseNumber;
         $this->lastName = $lastName;
-        $this->receiveNewsletter = $nljn;
+        $this->receiveNewsletter = $receiveNewsletter;
         $this->phoneMobile = $phoneMobile;
         $this->phonePrivate = $phonePrivate;
         $this->phoneWork = $phoneWork;
@@ -124,6 +126,8 @@ abstract class AbstractAddress implements SoapApiPart
         $this->salutation = $salutation;
         $this->street = $street;
     }
+
+
 
     /**
      * @return string
