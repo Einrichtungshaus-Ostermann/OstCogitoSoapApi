@@ -2,27 +2,24 @@
 
 namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer;
 
-use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\BaseApiRequest;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\PrinterBaseApiRequest;
 
-class GetAllPrinterRequest extends BaseApiRequest
+class GetAllPrinterRequest extends PrinterBaseApiRequest
 {
     /**
      * @var string
      */
     private $companyNumber;
 
-
     /**
      * @var string
      */
     private $serverAddress;
 
-
     /**
      * @var string
      */
     private $serverEnvironment;
-
 
     /**
      * GetAllPrinterRequest constructor.
@@ -39,12 +36,12 @@ class GetAllPrinterRequest extends BaseApiRequest
         $this->serverEnvironment = $serverEnvironment;
     }
 
-
     /**
      * @param null|array $printersResult
      *
-     * @return CogitoPrinter[]
      * @throws \Exception
+     *
+     * @return CogitoPrinter[]
      */
     public function getPrinterArray($printersResult = null): array
     {
@@ -67,10 +64,10 @@ class GetAllPrinterRequest extends BaseApiRequest
         return $printers;
     }
 
-
     /**
-     * @return array|null
      * @throws \Exception
+     *
+     * @return array|null
      */
     public function getResult()
     {
@@ -88,7 +85,6 @@ class GetAllPrinterRequest extends BaseApiRequest
         return null;
     }
 
-
     public function getRequestXML(): string
     {
         return '<tem:GetAllPrinters xmlns:ikv="http://schemas.datacontract.org/2004/07/IKVOrderImport" xmlns:tem="http://tempuri.org/">
@@ -99,7 +95,6 @@ class GetAllPrinterRequest extends BaseApiRequest
                         </tem:request>
                      </tem:GetAllPrinters>';
     }
-
 
     public function getRequestMethod(): string
     {

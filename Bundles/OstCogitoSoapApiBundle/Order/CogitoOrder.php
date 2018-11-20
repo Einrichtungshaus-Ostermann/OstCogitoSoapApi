@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order;
 
@@ -94,6 +94,7 @@ class CogitoOrder implements SoapApiPart
 
     /**
      * CogitoOrder constructor.
+     *
      * @param int $companyNumber
      * @param int $storeKey
      * @param int $division
@@ -135,12 +136,14 @@ class CogitoOrder implements SoapApiPart
         $this->orderPositions = $orderPositions;
     }
 
-
     /**
      * @return int
      */
     public function getCompanyNumber(): int
     {
+
+
+
         return $this->companyNumber;
     }
 
@@ -434,13 +437,13 @@ class CogitoOrder implements SoapApiPart
                       <ikv:Firm>' . $this->companyNumber . '</ikv:Firm>
                       <ikv:Lart>' . $this->deliveryType . '</ikv:Lart>
                       <ikv:Mwst>' . $this->orderVAT . '</ikv:Mwst>
-                      <ikv:OrderOrderNachlass>';
+                      <ikv:OrderNachlass>';
 
         foreach ($this->orderDiscounts as $orderOrderNachlass) {
             $xmlString .= $orderOrderNachlass->getXML();
         }
 
-        $xmlString .= '</ikv:OrderOrderNachlass>
+        $xmlString .= '</ikv:OrderNachlass>
                <ikv:OrderPositions>';
 
         foreach ($this->orderPositions as $orderPosition) {

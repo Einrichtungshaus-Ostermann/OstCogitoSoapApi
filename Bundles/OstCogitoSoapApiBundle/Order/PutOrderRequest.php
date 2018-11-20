@@ -1,12 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order;
 
-use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\BaseApiRequest;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\OrderBaseApiRequest;
 
-class PutOrderRequest extends BaseApiRequest
+class PutOrderRequest extends OrderBaseApiRequest
 {
-
     /** @var string */
     protected $serverAddress;
 
@@ -30,6 +29,7 @@ class PutOrderRequest extends BaseApiRequest
 
     /**
      * PutOrderRequest constructor.
+     *
      * @param string $serverAddress
      * @param string $serverEnvironment
      * @param CogitoOrder $order
@@ -175,14 +175,14 @@ class PutOrderRequest extends BaseApiRequest
 
     public function getRequestXML(): string
     {
-        $soapXML = '<tem:SaveOrderData xmlns:tem="http://tempuri.org/" xmlns:ikv="http://schemas.datacontract.org/2004/07/IKVOrderImport">
+        $soapXML = '<tem:SaveOrderData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                        xmlns:tem="http://tempuri.org/" xmlns:ikv="http://schemas.datacontract.org/2004/07/IKVOrderImport">
                     <tem:request>';
         $soapXML .= $this->shippingAddress->getXML();
         $soapXML .= $this->order->getXML();
         $soapXML .= $this->billingAddress->getXML();
         $soapXML .= '<ikv:Server>' . $this->serverAddress . '</ikv:Server>
                     <ikv:Umgebung>' . $this->serverEnvironment . '</ikv:Umgebung>';
-
 
         $soapXML .= '<ikv:Kndn>' . ($this->shippingAddressNumber === 0 ? '' : $this->shippingAddressNumber) . '</ikv:Kndn>
                      <ikv:Anum>' . ($this->billingAddressNumber === 0 ? '' : $this->billingAddressNumber) . '</ikv:Anum>

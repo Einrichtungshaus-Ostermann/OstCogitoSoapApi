@@ -1,10 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order;
 
 class BillingAddress extends AbstractAddress
 {
-
     public function getXML(): string
     {
         $parentXML = '<ikv:Rechnungsadresse>' . "\n";
@@ -13,5 +12,4 @@ class BillingAddress extends AbstractAddress
 
         return $parentXML;
     }
-
 }

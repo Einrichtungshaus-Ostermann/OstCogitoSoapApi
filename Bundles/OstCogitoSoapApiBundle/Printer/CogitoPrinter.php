@@ -9,24 +9,20 @@ class CogitoPrinter
     const PRINTER_TYPE_LASER = 'L';
     const PRINTER_TYPE_MULTIPLEX = 'M';
 
-
     /**
      * @var string
      */
     private $key;
-
 
     /**
      * @var string
      */
     private $description;
 
-
     /**
      * @var string
      */
     private $type;
-
 
     /**
      * CogitoPrinter constructor.
@@ -52,9 +48,9 @@ class CogitoPrinter
     public function toArray()
     {
         return [
-            'key' => $this->getKey(),
+            'key'         => $this->getKey(),
             'description' => $this->getDescription(),
-            'type' => $this->getType()
+            'type'        => $this->getType(),
         ];
     }
 

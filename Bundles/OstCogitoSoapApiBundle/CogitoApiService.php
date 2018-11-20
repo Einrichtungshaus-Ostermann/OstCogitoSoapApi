@@ -1,12 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle;
 
 use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order\BillingAddress;
 use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order\CogitoOrder;
 use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order\CogitoOrderNumber;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order\OrderDiscount;
 use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order\OrderPosition;
 use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order\PutOrderRequest;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order\ShippingAddress;
 use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer\CogitoPrinter;
 use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer\GetAllPrinterRequest;
 use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer\PrintOrderRequest;
@@ -15,23 +17,19 @@ use Shopware\Models\Order\Billing;
 use Shopware\Models\Order\Detail;
 use Shopware\Models\Order\Order;
 use Shopware\Models\Order\Shipping;
+use Shopware\Models\Payment\Payment;
 
 class CogitoApiService
 {
-
     /**
      * @var SoapApiRequestService
      */
     private $soapApiRequestService;
 
-
-
     /**
      * @var ModelManager
      */
     private $modelManager;
-
-
 
     public function __construct(SoapApiRequestService $soapApiRequestService, ModelManager $modelManager)
     {
@@ -39,13 +37,13 @@ class CogitoApiService
         $this->modelManager = $modelManager;
     }
 
-
-
     /**
      * @param string $ordernumber
      * @param string $printer
-     * @return array|null
+     *
      * @throws \Exception
+     *
+     * @return array|null
      */
     public function printOrder(string $ordernumber, string $printer)
     {
@@ -65,11 +63,10 @@ class CogitoApiService
         return $printOrderRequest->getResult();
     }
 
-
-
     /**
-     * @return array|null
      * @throws \Exception
+     *
+     * @return array|null
      */
     public function getPrinterList()
     {
@@ -83,13 +80,13 @@ class CogitoApiService
         return $getAllPrinterRequest->getResult();
     }
 
-
-
     /**
      * @param string $user
      * @param string $function
-     * @return array|null
+     *
      * @throws \Exception
+     *
+     * @return array|null
      */
     public function getDefaultPrinter(string $user, string $function = '702')
     {
@@ -106,18 +103,17 @@ class CogitoApiService
         return $getAllPrinterRequest->getResult();
     }
 
-
-
     /**
      * @param string $user
      * @param string $printer
      * @param string $function
-     * @return array|null
+     *
      * @throws \Exception
+     *
+     * @return array|null
      */
     public function setDefaultPrinter(string $user, string $printer, string $function = '702')
     {
-
         $cogitoPrinter = new CogitoPrinter($printer);
 
         /** @var GetAllPrinterRequest $getAllPrinterRequest */
@@ -134,96 +130,124 @@ class CogitoApiService
         return $getAllPrinterRequest->getResult();
     }
 
-
-
     /**
      * @param string $orderNumber
-     * @return array|null
+     *
      * @throws \Exception
+     *
+     * @return array|null
      */
     public function exportOrder(string $orderNumber)
     {
-        $order = $this->modelManager->getRepository(Order::class)->findOneBy(['number', $orderNumber]);
+        $order = $this->modelManager->getRepository(Order::class)->findOneBy(['number' => $orderNumber]);
+
         if ($order === null) {
             return null;
         }
 
         /** @var OrderPosition $orderPositions */
         $orderPositions = [];
+        /** @var OrderDiscount[] $orderDiscounts */
+        $orderDiscounts = [];
         /** @var Detail $orderDetail */
         foreach ($order->getDetails() as $position => $orderDetail) {
-            $orderPositions[] = $this->getOrderPositionForDetail($position, $orderDetail);
+            $orderPosition = $this->getOrderPositionForDetail($position + 1, $orderDetail);
+            if ($orderPosition !== null) {
+                $orderPositions[] = $orderPosition;
+                continue;
+            }
+
+            $orderDiscount = $this->getOrderDiscountForDetail($position + 1, $orderDetail);
+            if ($orderDiscount !== null) {
+                $orderDiscounts[] = $orderDiscount;
+                continue;
+            }
         }
+
+        /** @var Payment $payment */
+        $payment = $order->getPayment();
+        $paymentId = 'L'; //$payment->getAttribute()->//TODO: Mapping for Payment IDs
+
+        /** @var Shipping $shipping */
+        $shipping = $order->getShipping();
+        $shippingId = '04'; //$shipping->getAttribute();//TODO: Mapping for Delivery Types
+
+        $cogitoOrderNumer = new CogitoOrderNumber($order->getNumber());
 
         $cogitoOrder = new CogitoOrder(
             1,
-            96,
-            0,
-            $order->getNumber(),
-            $order->getOrderTime(),
+            $cogitoOrderNumer->getSalehouseNumber(),
+            $cogitoOrderNumer->getSection(),
+            $cogitoOrderNumer->getOrderNumber(),
+            $order->getOrderTime()->format('Y-m-d'),
             $order->getInvoiceAmount(),
             0,
             $order->getInvoiceAmount() - $order->getInvoiceAmountNet(),
-            '', //TODO: Mapping for Payment IDs
-            '', //TODO: Mapping for Delivery Types
+            $paymentId,
+            $shippingId,
             0,
             $order->getComment(),
             '',
             $order->getTransactionId(),
             $order->getTransactionId(),
-            '',
-            [],
+            'I',
+            $orderDiscounts,
             $orderPositions
-        );
-
-        /** @var Billing $swBillingAddress */
-        $swBillingAddress = $order->getBilling();
-        $billingAddress = new BillingAddress(
-            $swBillingAddress->getCustomer()->getBirthday(),
-            $swBillingAddress->getCity(),
-            '',
-            $swBillingAddress->getCountry(),
-            $swBillingAddress->getCustomer()->getEmail(),
-            $swBillingAddress->getFirstName(),
-            '',
-            '',
-            $swBillingAddress->getLastName(),
-            false,
-            $swBillingAddress->getPhone(),
-            $swBillingAddress->getPhone(),
-            $swBillingAddress->getPhone(),
-            $swBillingAddress->getZipCode(),
-            $swBillingAddress->getSalutation(),
-            $swBillingAddress->getStreet()
         );
 
         /** @var Shipping $swShippingAddress */
         $swShippingAddress = $order->getShipping();
-        $shippingAddress = new BillingAddress(
-            $swShippingAddress->getCustomer()->getBirthday(),
-            $swShippingAddress->getCity(),
+        /** @var Billing $swBillingAddress */
+        $swBillingAddress = $order->getBilling();
+
+        /** @var Shipping|Billing $swShippingBilling */
+        $swShippingBilling = $swBillingAddress ?? $swShippingAddress;
+        $swBillingShipping = $swShippingAddress ?? $swBillingAddress;
+
+        $billingAddress = new BillingAddress(
+            $swBillingShipping->getCustomer()->getBirthday() ?? '1970-01-01',
+            $swBillingShipping->getCity(),
+            $swBillingShipping->getCompany(),
+            $swBillingShipping->getCountry()->getIso(),
+            $swBillingShipping->getCustomer()->getEmail(),
+            $swBillingShipping->getFirstName(),
+            'EG',
             '',
-            $swShippingAddress->getCountry(),
-            $swShippingAddress->getCustomer()->getEmail(),
-            $swShippingAddress->getFirstName(),
-            '',
-            '',
-            $swShippingAddress->getLastName(),
+            $swBillingShipping->getLastName(),
             false,
-            $swShippingAddress->getPhone(),
-            $swShippingAddress->getPhone(),
-            $swShippingAddress->getPhone(),
-            $swShippingAddress->getZipCode(),
-            $swShippingAddress->getSalutation(),
-            $swShippingAddress->getStreet()
+            $swBillingShipping->getPhone(),
+            $swBillingShipping->getPhone(),
+            $swBillingShipping->getPhone(),
+            $swBillingShipping->getZipCode(),
+            $swBillingShipping->getSalutation(),
+            $swBillingShipping->getStreet()
+        );
+
+        $shippingAddress = new ShippingAddress(
+            $swShippingBilling->getCustomer()->getBirthday() ?? '1970-01-01',
+            $swShippingBilling->getCity(),
+            $swShippingBilling->getCompany(),
+            $swShippingBilling->getCountry()->getIso(),
+            $swShippingBilling->getCustomer()->getEmail(),
+            $swShippingBilling->getFirstName(),
+            'EG',
+            '',
+            $swShippingBilling->getLastName(),
+            false,
+            $swShippingBilling->getPhone(),
+            $swShippingBilling->getPhone(),
+            $swShippingBilling->getPhone(),
+            $swShippingBilling->getZipCode(),
+            $swShippingBilling->getSalutation(),
+            $swShippingBilling->getStreet()
         );
 
         /** @var PutOrderRequest $getAllPrinterRequest */
         $putOrderRequest = $this->soapApiRequestService->getRequest(SoapApiRequestService::PUT_ORDER, [
-            'order' => $cogitoOrder,
-            'billingAddress' => $billingAddress,
-            'billingAddressNumber' => 0,
-            'shippingAddress' => $shippingAddress,
+            'order'                 => $cogitoOrder,
+            'billingAddress'        => $billingAddress,
+            'billingAddressNumber'  => 0,
+            'shippingAddress'       => $shippingAddress,
             'shippingAddressNumber' => 0
         ]);
 
@@ -231,10 +255,8 @@ class CogitoApiService
             return [];
         }
 
-        return $putOrderRequest ->getResult();
+        return $putOrderRequest->getResult();
     }
-
-
 
     private function getOrderPositionForDetail(int $position, Detail $detail)
     {
@@ -244,17 +266,36 @@ class CogitoApiService
             return null;
         }
 
+        $articleNumber = explode('-', $detail->getArticleNumber())[0];
+        $variationNumber = explode('-', $detail->getArticleNumber())[1] ?? 0;
+
+        $positionType = 'E';
+
+        //If Articlenumber begins with ZU1 then its a Service
+        if (strpos($detail->getArticleNumber(), 'ZU1') === 0) {
+            $articleNumber = 132735;
+            $positionType = 'D';
+        }
+
+        $serviceLevel = false ? 'LM' : 'LO'; //TODO: Replace false with Assembly check
+
+        $desiredDate = $detail->getOrder()->getOrderTime()->format('Y-m-d');
+
+        /** @var Shipping $shipping */
+        $shipping = $detail->getOrder()->getShipping();
+        $shippingId = '04'; //$shipping->getAttribute();//TODO: Mapping for Delivery Types
+
         return new OrderPosition(
             $position,
             0,
             $detail->getQuantity(),
             $articleDetail->getAttribute()->getAttr1(),
-            str_pad(explode('.', $detail->getArticleNumber())[0], 7, '0', STR_PAD_LEFT),
-            0,
+            $articleNumber,
+            $variationNumber,
             '',
             number_format($detail->getPrice(), 2, '.', ''),
-            'E',
-            $detail->getEan(),
+            $positionType,
+            (int)$detail->getEan(),
             '',
             '',
             '',
@@ -262,11 +303,42 @@ class CogitoApiService
             50,
             99,
             '',
+            $shippingId,
+            $desiredDate,
             '',
             '',
-            '',
-            $detail->getAttribute()->getBestitMontage(), //TODO: Wat?
-            0
+            $serviceLevel
+        );
+    }
+
+
+
+    private function getOrderDiscountForDetail(int $position, Detail $detail)
+    {
+        $articleDetail = $detail->getArticleDetail();
+
+        if ($articleDetail === null) {
+            return null;
+        }
+
+        if (strpos($detail->getArticleNumber(), 'GU') === 0) {
+            $discountKey = '507';
+        } elseif (strpos($detail->getArticleNumber(), 'NL') === 0) {
+            $discountKey = '622';
+        } else {
+            return null;
+        }
+
+        return new OrderDiscount(
+            $articleDetail->getAttribute()->getAttr1(),
+            0,
+            0,
+            $articleDetail->getAttribute()->getAttr1(),
+            $discountKey,
+            50,
+            '012253',
+            0.00,
+            number_format($detail->getPrice(), 2, '.', '')
         );
     }
 }

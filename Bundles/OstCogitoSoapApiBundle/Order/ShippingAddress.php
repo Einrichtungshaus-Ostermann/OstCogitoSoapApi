@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order;
 
@@ -12,5 +12,4 @@ class ShippingAddress extends AbstractAddress
 
         return $parentXML;
     }
-
 }

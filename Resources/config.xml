@@ -4,8 +4,12 @@
 
     <elements>
         <element type="text" required="true" scope="shop">
-            <name>wsdlPath</name>
-            <label>WSDL Pfad</label>
+            <name>printerWsdlPath</name>
+            <label>Printer WSDL Pfad</label>
+        </element>
+        <element type="text" required="true" scope="shop">
+            <name>orderWsdlPath</name>
+            <label>Order WSDL Pfad</label>
         </element>
         <element type="number" required="true" scope="shop">
             <name>companyNumber</name>
@@ -25,8 +29,8 @@
                     <label>OST_ECHT</label>
                 </option>
                 <option>
-                    <value>OST_QSK</value>
-                    <label>OST_QSK</label>
+                    <value>OST_QSK;RPG</value>
+                    <label>OST_QSK;RPG</label>
                 </option>
                 <option>
                     <value>OST_QSC</value>

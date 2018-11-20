@@ -26,14 +26,12 @@ class Uninstall
      */
     protected $plugin;
 
-
     /**
      * ...
      *
      * @var UninstallContext
      */
     protected $context;
-
 
     /**
      * ...
@@ -42,14 +40,12 @@ class Uninstall
      */
     protected $modelManager;
 
-
     /**
      * ...
      *
      * @var CrudService
      */
     protected $crudService;
-
 
     /**
      * ...
@@ -67,7 +63,6 @@ class Uninstall
         $this->modelManager = $modelManager;
         $this->crudService = $crudService;
     }
-
 
     /**
      * ...

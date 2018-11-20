@@ -12,25 +12,10 @@ abstract class BaseApiRequest implements ApiRequestInterface
      */
     protected $soapClient;
 
-
     public function __construct()
     {
         $this->soapClient = $this->getSoapClient();
     }
-
-
-    protected function getSoapClient(): SoapClient
-    {
-        $wsdlPath = Shopware()->Config()->getByNamespace('OstCogitoSoapApi', 'wsdlPath');
-        $params = [
-            'trace' => 1,
-            'use' => SOAP_LITERAL,
-            'style' => SOAP_DOCUMENT
-        ];
-
-        return new SoapClient($wsdlPath, $params);
-    }
-
 
     public function send()
     {
@@ -43,7 +28,6 @@ abstract class BaseApiRequest implements ApiRequestInterface
             throw $exception;
         }
     }
-
 
     public function trimArray(array $array)
     {
@@ -59,12 +43,10 @@ abstract class BaseApiRequest implements ApiRequestInterface
         return $newArray;
     }
 
-
     public function removeStdClass($result): array
     {
         return objectToArray($result);
     }
-
 
     public function isValidResponse($response): bool
     {

@@ -2,39 +2,34 @@
 
 namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer;
 
-use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\BaseApiRequest;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\PrinterBaseApiRequest;
 
-class GetDefaultPrinterRequest extends BaseApiRequest
+class GetDefaultPrinterRequest extends PrinterBaseApiRequest
 {
     /**
      * @var string
      */
     private $companyNumber;
 
-
     /**
      * @var string
      */
     private $serverAddress;
-
 
     /**
      * @var string
      */
     private $serverEnvironment;
 
-
     /**
      * @var string
      */
     private $user;
 
-
     /**
      * @var string
      */
     private $function;
-
 
     /**
      * GetDefaultPrinterRequest constructor.
@@ -55,10 +50,10 @@ class GetDefaultPrinterRequest extends BaseApiRequest
         $this->function = $function;
     }
 
-
     /**
-     * @return array|null
      * @throws \Exception
+     *
+     * @return array|null
      */
     public function getResult()
     {
@@ -78,7 +73,6 @@ class GetDefaultPrinterRequest extends BaseApiRequest
         return null;
     }
 
-
     public function getRequestXML(): string
     {
         return '<tem:GetDefaultPrinter xmlns:ikv="http://schemas.datacontract.org/2004/07/IKVOrderImport" xmlns:tem="http://tempuri.org/">
@@ -91,7 +85,6 @@ class GetDefaultPrinterRequest extends BaseApiRequest
                         </tem:request>
                      </tem:GetDefaultPrinter>';
     }
-
 
     public function getRequestMethod(): string
     {

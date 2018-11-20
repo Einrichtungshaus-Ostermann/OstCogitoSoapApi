@@ -13,6 +13,7 @@
         <service id="ost_cogito_soap_api.cogito_api_service"
                  class="OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\CogitoApiService">
             <argument type="service" id="ost_cogito_soap_api.soap_api_request_service"/>
+            <argument type="service" id="models"/>
         </service>
     </services>
 </container>

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order;
 
@@ -53,6 +53,7 @@ class OrderDiscount implements SoapApiPart
 
     /**
      * OrderDiscount constructor.
+     *
      * @param int $companyNumber
      * @param int $mainPositionNumber
      * @param int $subPositionNumber

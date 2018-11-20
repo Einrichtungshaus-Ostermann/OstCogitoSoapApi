@@ -9,12 +9,10 @@ class CogitoOrderNumber
      */
     private $orderNumber;
 
-
     /**
      * @var array
      */
     private $decomposedValues;
-
 
     /**
      * CogitoOrderNumber constructor.
@@ -26,18 +24,42 @@ class CogitoOrderNumber
         $this->orderNumber = $orderNumber;
     }
 
-
     public function getOrderTerm()
     {
         return $this->getSalehouseNumber() . '-' . $this->getSection() . '-' . $this->getOrderNumber();
     }
-
 
     public function getSalehouseNumber()
     {
         return $this->decomposeOrderNumber()['salehousenumber'];
     }
 
+
+
+    public function getSection()
+    {
+        return $this->decomposeOrderNumber()['section'];
+    }
+
+
+
+    /**
+     * @return int
+     */
+    public function getOrderNumber()
+    {
+        return $this->decomposeOrderNumber()['ordernumber'];
+    }
+
+
+
+    /**
+     * @return int
+     */
+    public function getOriginalOrderNumber()
+    {
+        return $this->orderNumber;
+    }
 
     /**
      * Zerlegt die Bestellungsnummer in Die Bestandteile "Saleshousenumber", "Section" und "OrderNumber" und gibt ein
@@ -55,34 +77,10 @@ class CogitoOrderNumber
 
         $this->decomposedValues = [
             'salehousenumber' => substr($this->orderNumber, 0, 2),
-            'section' => $this->orderNumber[2],
-            'ordernumber' => substr($this->orderNumber, 3, 6)
+            'section'         => $this->orderNumber[2],
+            'ordernumber'     => substr($this->orderNumber, 3, 6),
         ];
 
         return $this->decomposedValues;
-    }
-
-
-    public function getSection()
-    {
-        return $this->decomposeOrderNumber()['section'];
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getOrderNumber()
-    {
-        return $this->decomposeOrderNumber()['ordernumber'];
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getOriginalOrderNumber()
-    {
-        return $this->orderNumber;
     }
 }

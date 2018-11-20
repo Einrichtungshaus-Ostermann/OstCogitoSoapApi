@@ -19,7 +19,6 @@ class CogitoSoapApi extends Shopware_Controllers_Backend_ExtJs implements \Shopw
         $this->View()->assign(['success' => true, 'data' => $allPrinter, 'total' => count($allPrinter)]);
     }
 
-
     public function printOrderAction()
     {
         $apiService = $this->container->get('ost_cogito_soap_api.cogito_api_service');
@@ -30,7 +29,6 @@ class CogitoSoapApi extends Shopware_Controllers_Backend_ExtJs implements \Shopw
         $this->View()->assign(['success' => true, 'data' => $printOrderResult, 'total' => count($printOrderResult)]);
     }
 
-
     public function getDefaultPrinterAction()
     {
         $apiService = $this->container->get('ost_cogito_soap_api.cogito_api_service');
@@ -39,9 +37,10 @@ class CogitoSoapApi extends Shopware_Controllers_Backend_ExtJs implements \Shopw
 
         /* @noinspection PhpParamsInspection */
         $this->View()->assign(['success' => true, 'data' => $defaultPrinterResult,
-            'total' => count($defaultPrinterResult)]);
+                               'total'   => count($defaultPrinterResult),
+        ]
+        );
     }
-
 
     public function setDefaultPrinterAction()
     {
@@ -51,8 +50,30 @@ class CogitoSoapApi extends Shopware_Controllers_Backend_ExtJs implements \Shopw
 
         /* @noinspection PhpParamsInspection */
         $this->View()->assign(['success' => true, 'data' => $defaultPrinterResult,
-            'total' => count($defaultPrinterResult)]);
+                               'total'   => count($defaultPrinterResult),
+        ]
+        );
     }
+
+
+
+    public function exportOrderAction()
+    {
+        $apiService = $this->container->get('ost_cogito_soap_api.cogito_api_service');
+
+        $exportOrderResult = $apiService->exportOrder($this->request->get('orderNumber'));
+
+        /* @noinspection PhpParamsInspection */
+        $this->View()->assign(
+            [
+                'success' => $exportOrderResult !== null,
+                'data'    => $exportOrderResult,
+                'total'   => count($exportOrderResult),
+            ]
+        );
+    }
+
+
 
     /**
      * Returns a list with actions which should not be validated for CSRF protection
@@ -66,6 +87,7 @@ class CogitoSoapApi extends Shopware_Controllers_Backend_ExtJs implements \Shopw
             'printOrder',
             'getDefaultPrinter',
             'setDefaultPrinter',
+            'exportOrder',
         ];
     }
 }

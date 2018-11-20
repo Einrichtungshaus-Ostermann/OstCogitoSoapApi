@@ -24,14 +24,12 @@ class Update
      */
     protected $plugin;
 
-
     /**
      * ...
      *
      * @var InstallContext
      */
     protected $context;
-
 
     /**
      * ...
@@ -46,7 +44,6 @@ class Update
         $this->context = $context;
     }
 
-
     /**
      * ...
      */
@@ -55,7 +52,6 @@ class Update
         // install updates
         $this->update('0.0.0');
     }
-
 
     /**
      * ...

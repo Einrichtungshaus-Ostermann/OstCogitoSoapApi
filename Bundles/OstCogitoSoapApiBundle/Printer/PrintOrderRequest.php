@@ -2,40 +2,35 @@
 
 namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer;
 
-use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\BaseApiRequest;
 use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order\CogitoOrderNumber;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\PrinterBaseApiRequest;
 
-class PrintOrderRequest extends BaseApiRequest
+class PrintOrderRequest extends PrinterBaseApiRequest
 {
     /**
      * @var string
      */
     private $companyNumber;
 
-
     /**
      * @var string
      */
     private $serverAddress;
-
 
     /**
      * @var string
      */
     private $serverEnvironment;
 
-
     /**
      * @var CogitoPrinter
      */
     private $printer;
 
-
     /**
      * @var CogitoOrderNumber
      */
     private $orderNumber;
-
 
     /**
      * GetAllPrinterRequest constructor.
@@ -56,10 +51,10 @@ class PrintOrderRequest extends BaseApiRequest
         $this->orderNumber = $orderNumber;
     }
 
-
     /**
-     * @return array|null
      * @throws \Exception
+     *
+     * @return array|null
      */
     public function getResult()
     {
@@ -67,7 +62,6 @@ class PrintOrderRequest extends BaseApiRequest
 
         return $this->removeStdClass($result);
     }
-
 
     public function getRequestXML(): string
     {
@@ -83,7 +77,6 @@ class PrintOrderRequest extends BaseApiRequest
                     </tem:request>
                 </tem:PrintOrderData>';
     }
-
 
     public function getRequestMethod(): string
     {

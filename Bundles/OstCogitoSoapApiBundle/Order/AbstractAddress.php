@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order;
 
@@ -86,10 +86,9 @@ abstract class AbstractAddress implements SoapApiPart
      */
     protected $street;
 
-
-
     /**
      * AbstractAddress constructor.
+     *
      * @param string $birthday
      * @param string $city
      * @param string $company
@@ -126,8 +125,6 @@ abstract class AbstractAddress implements SoapApiPart
         $this->salutation = $salutation;
         $this->street = $street;
     }
-
-
 
     /**
      * @return string
@@ -387,7 +384,7 @@ abstract class AbstractAddress implements SoapApiPart
 
     public function getXML(): string
     {
-        return '<ikv:Birthday>' . $this->birthday . '</ikv:Birthday>
+        return '<ikv:Birthday xsi:nil="true">'.$this->birthday.'</ikv:Birthday>
                 <ikv:City>' . $this->city . '</ikv:City>
                 <ikv:Company>' . $this->company . '</ikv:Company>
                 <ikv:CountryCode>' . $this->countryCode . '</ikv:CountryCode>
@@ -401,7 +398,7 @@ abstract class AbstractAddress implements SoapApiPart
                 <ikv:PhonePrivate>' . $this->phonePrivate . '</ikv:PhonePrivate>
                 <ikv:PhoneWork>' . $this->phoneWork . '</ikv:PhoneWork>
                 <ikv:PostalCode>' . $this->postalCode . '</ikv:PostalCode>
-                <ikv:Salutation>' . $this->salutation . '</ikv:Salutation>
+                <ikv:Salutation>'.($this->salutation === 'mr' ? 'Herr' : 'Frau').'</ikv:Salutation>
                 <ikv:Street>' . $this->street . '</ikv:Street>';
     }
 }

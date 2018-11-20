@@ -20,10 +20,8 @@ class SoapApiRequestService
     public const PRINT_ORDER = PrintOrderRequest::class;
     public const PUT_ORDER = PutOrderRequest::class;
 
-
     private $allTypes = [self::GET_ALL_PRINTER, self::GET_DEFAULT_PRINTER, self::SET_DEFAULT_PRINTER,
         self::PRINT_ORDER, self::PUT_ORDER];
-
 
     /**
      * @param string $requestType
@@ -42,7 +40,6 @@ class SoapApiRequestService
 
         $oReflectionClass = new ReflectionClass($requestType);
         $config = Shopware()->Config();
-
 
         $sortedParameter = [];
         foreach ($oReflectionClass->getConstructor()->getParameters() as $parameter) {

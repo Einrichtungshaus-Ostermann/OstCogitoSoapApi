@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order;
 
@@ -116,10 +116,9 @@ class OrderPosition implements SoapApiPart
      */
     protected $serviceLevel;
 
-
-
     /**
      * OrderPosition constructor.
+     *
      * @param int $mainPositionNumber
      * @param int $subPositionNumber
      * @param float $amount
@@ -168,8 +167,6 @@ class OrderPosition implements SoapApiPart
         $this->deliveryNote = $deliveryNote;
         $this->serviceLevel = $serviceLevel;
     }
-
-
 
     /**
      * @return int
@@ -459,9 +456,6 @@ class OrderPosition implements SoapApiPart
         $this->shippingType = $shippingType;
     }
 
-    /**
-     * @return null
-     */
     public function getDesiredDate(): string
     {
         return $this->desiredDate;
@@ -540,7 +534,7 @@ class OrderPosition implements SoapApiPart
                      <ikv:Geid>' . $this->xcaliburGeometryId . '</ikv:Geid>
                      <ikv:Hbsn>' . $this->manufacturerArticleNumber . '</ikv:Hbsn>
                      <ikv:Koid>' . $this->xcaliburConfigurationId . '</ikv:Koid>
-                     <ikv:Lart>' . $this->shippingType . '</ikv:Lart>
+                     <ikv:Lart>'.str_pad($this->shippingType, 2, '0', STR_PAD_LEFT).'</ikv:Lart>
                      <ikv:Lfhw>' . $this->deliveryNote . '</ikv:Lfhw>
                      <ikv:Poar>' . $this->positionType . '</ikv:Poar>
                      <ikv:Prid>' . $this->productId . '</ikv:Prid>
