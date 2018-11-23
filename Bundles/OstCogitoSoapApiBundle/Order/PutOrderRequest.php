@@ -2,8 +2,6 @@
 
 namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order;
 
-use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\OrderBaseApiRequest;
-
 class PutOrderRequest extends OrderBaseApiRequest
 {
     /** @var string */

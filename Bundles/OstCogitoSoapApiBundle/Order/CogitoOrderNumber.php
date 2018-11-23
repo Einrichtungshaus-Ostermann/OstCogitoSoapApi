@@ -29,16 +29,16 @@ class CogitoOrderNumber
         return $this->getSalehouseNumber() . '-' . $this->getSection() . '-' . $this->getOrderNumber();
     }
 
-    public function getSalehouseNumber()
+    public function getSalehouseNumber(): int
     {
-        return $this->decomposeOrderNumber()['salehousenumber'];
+        return (int)$this->decomposeOrderNumber()['salehousenumber'];
     }
 
 
 
     public function getSection()
     {
-        return $this->decomposeOrderNumber()['section'];
+        return (int)$this->decomposeOrderNumber()['section'];
     }
 
 
@@ -48,7 +48,7 @@ class CogitoOrderNumber
      */
     public function getOrderNumber()
     {
-        return $this->decomposeOrderNumber()['ordernumber'];
+        return (int)$this->decomposeOrderNumber()['ordernumber'];
     }
 
 

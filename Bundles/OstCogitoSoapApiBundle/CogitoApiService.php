@@ -184,7 +184,7 @@ class CogitoApiService
             0,
             $order->getInvoiceAmount() - $order->getInvoiceAmountNet(),
             $paymentId,
-            $shippingId,
+            (int)$shippingId,
             0,
             $order->getComment(),
             '',
@@ -218,7 +218,7 @@ class CogitoApiService
             $swBillingShipping->getPhone(),
             $swBillingShipping->getPhone(),
             $swBillingShipping->getPhone(),
-            $swBillingShipping->getZipCode(),
+            (int)$swBillingShipping->getZipCode(),
             $swBillingShipping->getSalutation(),
             $swBillingShipping->getStreet()
         );
@@ -237,7 +237,7 @@ class CogitoApiService
             $swShippingBilling->getPhone(),
             $swShippingBilling->getPhone(),
             $swShippingBilling->getPhone(),
-            $swShippingBilling->getZipCode(),
+            (int)$swShippingBilling->getZipCode(),
             $swShippingBilling->getSalutation(),
             $swShippingBilling->getStreet()
         );
@@ -266,7 +266,9 @@ class CogitoApiService
             return null;
         }
 
+        /** @var string $articleNumber */
         $articleNumber = explode('-', $detail->getArticleNumber())[0];
+        /** @var string|int $variationNumber */
         $variationNumber = explode('-', $detail->getArticleNumber())[1] ?? 0;
 
         $positionType = 'E';
@@ -289,11 +291,11 @@ class CogitoApiService
             $position,
             0,
             $detail->getQuantity(),
-            $articleDetail->getAttribute()->getAttr1(),
-            $articleNumber,
-            $variationNumber,
+            (int) $articleDetail->getAttribute()->getAttr1(),
+            (int)$articleNumber,
+            (int)$variationNumber,
             '',
-            number_format($detail->getPrice(), 2, '.', ''),
+            $detail->getPrice(),
             $positionType,
             (int)$detail->getEan(),
             '',
@@ -303,7 +305,7 @@ class CogitoApiService
             50,
             99,
             '',
-            $shippingId,
+            (int)$shippingId,
             $desiredDate,
             '',
             '',

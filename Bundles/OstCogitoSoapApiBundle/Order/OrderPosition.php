@@ -520,7 +520,7 @@ class OrderPosition implements SoapApiPart
     public function getXML(): string
     {
         return '<ikv:OrderPosition>
-                     <ikv:Abpr>' . $this->pickupPrice . '</ikv:Abpr>
+                     <ikv:Abpr>' . number_format($this->pickupPrice, 2, '.', '') . '</ikv:Abpr>
                      <ikv:Aftx>' . $this->variationInformationAsText . '</ikv:Aftx>
                      <ikv:Ahpn>' . $this->mainPositionNumber . '</ikv:Ahpn>
                      <ikv:Anla>' . $this->Anla . '</ikv:Anla>
@@ -534,7 +534,7 @@ class OrderPosition implements SoapApiPart
                      <ikv:Geid>' . $this->xcaliburGeometryId . '</ikv:Geid>
                      <ikv:Hbsn>' . $this->manufacturerArticleNumber . '</ikv:Hbsn>
                      <ikv:Koid>' . $this->xcaliburConfigurationId . '</ikv:Koid>
-                     <ikv:Lart>'.str_pad($this->shippingType, 2, '0', STR_PAD_LEFT).'</ikv:Lart>
+                     <ikv:Lart>'.str_pad((string)$this->shippingType, 2, '0', STR_PAD_LEFT).'</ikv:Lart>
                      <ikv:Lfhw>' . $this->deliveryNote . '</ikv:Lfhw>
                      <ikv:Poar>' . $this->positionType . '</ikv:Poar>
                      <ikv:Prid>' . $this->productId . '</ikv:Prid>

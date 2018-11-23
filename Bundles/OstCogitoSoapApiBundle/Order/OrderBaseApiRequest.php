@@ -1,7 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle;
+namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order;
 
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\BaseApiRequest;
 use SoapClient;
 
 abstract class OrderBaseApiRequest extends BaseApiRequest
