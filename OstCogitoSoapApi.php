@@ -8,6 +8,9 @@
  * 1.0.0
  * - initial release
  *
+ * 1.0.1
+ * - fixed plugin name
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>
@@ -23,6 +26,11 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class OstCogitoSoapApi extends Plugin
 {
+    /**
+     * ...
+     *
+     * @var string
+     */
     const NS_COGITO_DATA_ORDER = 'CogitoRetailWeb.Data.Order';
 
     /**

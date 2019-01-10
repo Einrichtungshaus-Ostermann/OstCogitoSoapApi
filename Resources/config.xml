@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../engine/Shopware/Components/Plugin/schema/config.xsd">
-
     <elements>
+
+        <element type="button">
+            <name>defaultButton</name>
+            <label><![CDATA[<b>Allgemeine Einstellungen</b>]]></label>
+        </element>
+
         <element type="text" required="true" scope="shop">
             <name>printerWsdlPath</name>
-            <label>Printer WSDL Pfad</label>
+            <label>WSDL Pfad - Drucker</label>
+            <description>Der WSDL Pfad für Drucker.</description>
         </element>
+
         <element type="text" required="true" scope="shop">
             <name>orderWsdlPath</name>
-            <label>Order WSDL Pfad</label>
+            <label>WSDL Pfad - Bestellungen</label>
+            <description>Der WSDL Pfad für Bestellungen.</description>
         </element>
+
         <element type="number" required="true" scope="shop">
             <name>companyNumber</name>
-            <label>Firmennummer</label>
+            <label>Firma</label>
+            <description>Welche Firma ist aktiv? 1 = Ostermann, 3 = Trends</description>
         </element>
+
         <element type="text" required="true">
             <name>serverAddress</name>
             <label>Serveraddresse</label>
-
+            <description>Die Adresse des Servers.</description>
         </element>
+
         <element type="select" required="true">
             <name>serverEnvironment</name>
             <label>Umgebung</label>
+            <description>Welche Umgebung soll genutzt werden?</description>
             <store>
                 <option>
                     <value>OST_ECHT</value>
@@ -38,18 +51,29 @@
                 </option>
             </store>
         </element>
+
+        <element type="button">
+            <name>testButton</name>
+            <label><![CDATA[<b>Test Einstellungen</b>]]></label>
+        </element>
+
         <element type="boolean" required="false">
             <name>testModeEnabled</name>
-            <label>Testmodus</label>
+            <label>Test aktivieren</label>
+            <description>Soll der Testmodus aktiviert werden?</description>
         </element>
+
         <element type="text" required="false">
             <name>testPrinter</name>
-            <label>Testdrucker</label>
+            <label>Drucker</label>
+            <description>Welcher Drucker soll zum Testen verwendet werden?</description>
         </element>
+
         <element type="text" required="false">
             <name>testOrdernumber</name>
-            <label>Test Bestellnummer</label>
+            <label>Bestellnummer</label>
+            <description>Welche Bestellnummer soll zum Testen verwendet werden?</description>
         </element>
-    </elements>
 
+    </elements>
 </config>
