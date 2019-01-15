@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle;
+namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer;
 
 use SoapClient;
+use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\BaseApiRequest;
 
 abstract class PrinterBaseApiRequest extends BaseApiRequest
 {

@@ -3,7 +3,6 @@
 namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer;
 
 use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Order\CogitoOrderNumber;
-use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\PrinterBaseApiRequest;
 
 class PrintOrderRequest extends PrinterBaseApiRequest
 {
