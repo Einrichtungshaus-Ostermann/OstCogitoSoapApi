@@ -2,8 +2,6 @@
 
 namespace OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\Printer;
 
-use OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\PrinterBaseApiRequest;
-
 class GetAllPrinterRequest extends PrinterBaseApiRequest
 {
     /**

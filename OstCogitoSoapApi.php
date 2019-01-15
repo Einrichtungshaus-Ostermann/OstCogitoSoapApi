@@ -11,6 +11,9 @@
  * 1.0.1
  * - fixed plugin name
  *
+ * 1.0.2
+ * - added plugin configuration for shipping and payment mapping via attribute
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>

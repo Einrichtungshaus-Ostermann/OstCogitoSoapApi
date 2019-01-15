@@ -437,7 +437,8 @@ class CogitoOrder implements SoapApiPart
                       <ikv:Firm>' . $this->companyNumber . '</ikv:Firm>
                       <ikv:Lart>' . $this->deliveryType . '</ikv:Lart>
                       <ikv:Mwst>' . $this->orderVAT . '</ikv:Mwst>
-                      <ikv:OrderNachlass>';
+                      <ikv:OrderNachlass>
+                      ';
 
         foreach ($this->orderDiscounts as $orderOrderNachlass) {
             $xmlString .= $orderOrderNachlass->getXML();

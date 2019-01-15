@@ -164,13 +164,22 @@ class CogitoApiService
             }
         }
 
+        $config = Shopware()->Config();
+
+        $paymentAttributeName = $config->getByNamespace('OstCogitoSoapApi', 'attributePayment');
+        $shippingAttributeName = $config->getByNamespace('OstCogitoSoapApi', 'attributeShipping');
+
         /** @var Payment $payment */
         $payment = $order->getPayment();
-        $paymentId = 'L'; //$payment->getAttribute()->//TODO: Mapping for Payment IDs
+        $paymentAttribute = Shopware()->Models()->toArray( $payment->getAttribute() );
+        $paymentId = $paymentAttribute[$paymentAttributeName];
+        // $paymentId = 'L'; //$payment->getAttribute()->//TODO: Mapping for Payment IDs
 
         /** @var Shipping $shipping */
         $shipping = $order->getShipping();
-        $shippingId = '04'; //$shipping->getAttribute();//TODO: Mapping for Delivery Types
+        $shippingAttribute = Shopware()->Models()->toArray( $shipping->getAttribute() );
+        $shippingId = $shippingAttribute[$shippingAttributeName];
+        // $shippingId = '04'; //$shipping->getAttribute();//TODO: Mapping for Delivery Types
 
         $cogitoOrderNumer = new CogitoOrderNumber($order->getNumber());
 

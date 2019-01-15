@@ -42,6 +42,10 @@
                     <label>OST_ECHT</label>
                 </option>
                 <option>
+                    <value>OST_ECHT;RPG</value>
+                    <label>OST_ECHT;RPG</label>
+                </option>
+                <option>
                     <value>OST_QSK;RPG</value>
                     <label>OST_QSK;RPG</label>
                 </option>
@@ -50,6 +54,25 @@
                     <label>OST_QSC</label>
                 </option>
             </store>
+        </element>
+
+        <element type="button">
+            <name>attributeButton</name>
+            <label><![CDATA[<b>Attribute Einstellungen</b>]]></label>
+        </element>
+
+        <element type="text">
+            <name>attributePayment</name>
+            <label>Zahlungsart</label>
+            <value>ost_cogito_soap_api_mapping</value>
+            <description>In welchem Attribut der Zahlungsart steht die ID für die Cogito SOAP API?</description>
+        </element>
+
+        <element type="text">
+            <name>attributeShipping</name>
+            <label>Versandart</label>
+            <value>ost_cogito_soap_api_mapping</value>
+            <description>In welchem Attribut der Versandart steht die ID für die Cogito SOAP API?</description>
         </element>
 
         <element type="button">
