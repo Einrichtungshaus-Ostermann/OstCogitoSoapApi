@@ -267,6 +267,11 @@ class CogitoApiService
         return $putOrderRequest->getResult();
     }
 
+    private function getConsultant()
+    {
+        return (int)Shopware()->Container()->get( "session" )->offsetGet( "ost-consultant" )['number'];
+    }
+
     private function getOrderPositionForDetail(int $position, Detail $detail)
     {
         $articleDetail = $detail->getArticleDetail();
@@ -292,9 +297,17 @@ class CogitoApiService
 
         $desiredDate = $detail->getOrder()->getOrderTime()->format('Y-m-d');
 
+
+
+        $config = Shopware()->Config();
+        $shippingAttributeName = $config->getByNamespace('OstCogitoSoapApi', 'attributeShipping');
+
         /** @var Shipping $shipping */
-        $shipping = $detail->getOrder()->getShipping();
-        $shippingId = '04'; //$shipping->getAttribute();//TODO: Mapping for Delivery Types
+        $shipping = $detail->getOrder()->getDispatch();
+        $shippingAttribute = Shopware()->Models()->toArray( $shipping->getAttribute() );
+        $shippingId = $shippingAttribute[$shippingAttributeName];
+
+
 
         return new OrderPosition(
             $position,
@@ -311,12 +324,12 @@ class CogitoApiService
             '',
             '',
             '',
-            50,
+            $this->getConsultant(),
             99,
             '',
             (int)$shippingId,
             $desiredDate,
-            '',
+            'F',
             '',
             $serviceLevel
         );
@@ -346,7 +359,7 @@ class CogitoApiService
             0,
             $articleDetail->getAttribute()->getAttr1(),
             $discountKey,
-            50,
+            $this->getConsultant(),
             '012253',
             0.00,
             number_format($detail->getPrice(), 2, '.', '')
