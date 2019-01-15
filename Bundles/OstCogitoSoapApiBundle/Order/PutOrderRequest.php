@@ -187,6 +187,12 @@ class PutOrderRequest extends OrderBaseApiRequest
                      </tem:request>
                      </tem:SaveOrderData>';
 
+
+        $filename = "order-xml." . date( "Y-m-d-H-i-s" ) . "." . substr( md5(microtime()), 0, 8 ) . ".xml";
+        file_put_contents($filename,$soapXML);
+
+
+
         return $soapXML;
     }
 
