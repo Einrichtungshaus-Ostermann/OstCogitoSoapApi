@@ -176,7 +176,7 @@ class CogitoApiService
         // $paymentId = 'L'; //$payment->getAttribute()->//TODO: Mapping for Payment IDs
 
         /** @var Shipping $shipping */
-        $shipping = $order->getShipping();
+        $shipping = $order->getDispatch();
         $shippingAttribute = Shopware()->Models()->toArray( $shipping->getAttribute() );
         $shippingId = $shippingAttribute[$shippingAttributeName];
         // $shippingId = '04'; //$shipping->getAttribute();//TODO: Mapping for Delivery Types
