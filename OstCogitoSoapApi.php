@@ -26,6 +26,9 @@
  * 1.1.3
  * - fixed configuration
  *
+ * 1.1.4
+ * - fixed configuration
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>

@@ -64,8 +64,7 @@
         <element type="select" required="true">
             <name>bakz</name>
             <label>Auftragseingangsart</label>
-            <description>Die Auftragsart ?</description>
-            <value>D</value>
+            <description>Die Auftragsart der Bestellung.</description>
             <store>
                 <option>
                     <value>A</value>
