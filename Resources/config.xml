@@ -125,6 +125,23 @@
         </element>
 
         <element type="button">
+            <name>debugButton</name>
+            <label><![CDATA[<b>Debug Einstellungen</b>]]></label>
+        </element>
+
+        <element type="boolean" required="false">
+            <name>debugLogStatus</name>
+            <label>Protokoll aktivieren</label>
+            <description>Sollen die .xml Dateien gespeichert werden? Der Dateiname folgt dem Schema: order_xml.Y-m-d-H-i-s.abcdefgh.xml</description>
+        </element>
+
+        <element type="boolean" required="false">
+            <name>debugLogDirectory</name>
+            <label>Protokoll Ordner</label>
+            <description>In welchen Unterordner sollen die .xml Dateieng gespeichert werden? Standardmäßig werden die .xml Dateien im Shop Stammverzeichnis gespeichert.</description>
+        </element>
+
+        <element type="button">
             <name>testButton</name>
             <label><![CDATA[<b>Test Einstellungen</b>]]></label>
         </element>

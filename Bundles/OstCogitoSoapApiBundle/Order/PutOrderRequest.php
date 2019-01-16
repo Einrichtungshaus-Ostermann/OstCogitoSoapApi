@@ -187,11 +187,11 @@ class PutOrderRequest extends OrderBaseApiRequest
                      </tem:request>
                      </tem:SaveOrderData>';
 
-
-        $filename = "order-xml." . date( "Y-m-d-H-i-s" ) . "." . substr( md5(microtime()), 0, 8 ) . ".xml";
-        file_put_contents($filename,$soapXML);
-
-
+        if ( (boolean) Shopware()->Container()->get( "ost_cogito_soap_api.configuration" )['debugLogStatus'] == true )
+        {
+            $filename = "order-xml." . date( "Y-m-d-H-i-s" ) . "." . substr( md5(microtime()), 0, 8 ) . ".xml";
+            file_put_contents((string) Shopware()->Container()->get( "ost_cogito_soap_api.configuration" )['debugLogDirectory'] . $filename,$soapXML);
+        }
 
         return $soapXML;
     }
