@@ -145,7 +145,7 @@ class CogitoApiService
             return null;
         }
 
-        /** @var OrderPosition $orderPositions */
+        /** @var OrderPosition[] $orderPositions */
         $orderPositions = [];
         /** @var OrderDiscount[] $orderDiscounts */
         $orderDiscounts = [];
@@ -163,6 +163,31 @@ class CogitoApiService
                 continue;
             }
         }
+
+        $orderPositions[] = new OrderPosition(
+            count($orderPositions) + 1,
+            0,
+            1,
+            1,
+            131186,
+            0,
+            '',
+            $order->getInvoiceShipping(),
+            'D',
+            0,
+            '',
+            '',
+            '',
+            '',
+            $this->getConsultant(),
+            99,
+            '',
+            0,
+            $order->getOrderTime()->format('Y-m-d'),
+            'F',
+            '',
+            'LO'
+        );
 
         $config = Shopware()->Config();
 
