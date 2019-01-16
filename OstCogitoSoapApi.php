@@ -23,6 +23,9 @@
  * 1.1.2
  * - added debugging configuration
  *
+ * 1.1.3
+ * - fixed configuration
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>
