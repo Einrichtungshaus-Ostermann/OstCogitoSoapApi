@@ -14,6 +14,9 @@
  * 1.0.2
  * - added plugin configuration for shipping and payment mapping via attribute
  *
+ * 1.1.0
+ * - added shipping costs
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>
