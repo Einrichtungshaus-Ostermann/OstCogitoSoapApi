@@ -31,10 +31,20 @@ class CogitoApiService
      */
     private $modelManager;
 
+    /**
+     * @var array
+     */
+    private $configuration;
+
+    /**
+     * @param SoapApiRequestService $soapApiRequestService
+     * @param ModelManager $modelManager
+     */
     public function __construct(SoapApiRequestService $soapApiRequestService, ModelManager $modelManager)
     {
         $this->soapApiRequestService = $soapApiRequestService;
         $this->modelManager = $modelManager;
+        $this->configuration = Shopware()->Container()->get('ost_cogito_soap_api.configuration');
     }
 
     /**
@@ -131,6 +141,8 @@ class CogitoApiService
     }
 
     /**
+     * ...
+     *
      * @param string $orderNumber
      *
      * @throws \Exception
@@ -139,6 +151,7 @@ class CogitoApiService
      */
     public function exportOrder(string $orderNumber)
     {
+        /* @var $order Order */
         $order = $this->modelManager->getRepository(Order::class)->findOneBy(['number' => $orderNumber]);
 
         if ($order === null) {
@@ -149,9 +162,10 @@ class CogitoApiService
         $orderPositions = [];
         /** @var OrderDiscount[] $orderDiscounts */
         $orderDiscounts = [];
+
         /** @var Detail $orderDetail */
         foreach ($order->getDetails() as $position => $orderDetail) {
-            $orderPosition = $this->getOrderPositionForDetail($position + 1, $orderDetail);
+            $orderPosition = $this->getOrderPositionForDetail($position + 1, $orderDetail, $order);
             if ($orderPosition !== null) {
                 $orderPositions[] = $orderPosition;
                 continue;
@@ -164,52 +178,12 @@ class CogitoApiService
             }
         }
 
-        $orderPositions[] = new OrderPosition(
-            count($orderPositions) + 1,
-            0,
-            1,
-            1,
-            131186,
-            0,
-            '',
-            $order->getInvoiceShipping(),
-            'D',
-            0,
-            '',
-            '',
-            '',
-            '',
-            $this->getConsultant(),
-            99,
-            '',
-            0,
-            $order->getOrderTime()->format('Y-m-d'),
-            'F',
-            '',
-            'LO'
-        );
-
-        $config = Shopware()->Config();
-
-        $paymentAttributeName = $config->getByNamespace('OstCogitoSoapApi', 'attributePayment');
-        $shippingAttributeName = $config->getByNamespace('OstCogitoSoapApi', 'attributeShipping');
-
-        /** @var Payment $payment */
-        $payment = $order->getPayment();
-        $paymentAttribute = Shopware()->Models()->toArray( $payment->getAttribute() );
-        $paymentId = $paymentAttribute[$paymentAttributeName];
-        // $paymentId = 'L'; //$payment->getAttribute()->//TODO: Mapping for Payment IDs
-
-        /** @var Shipping $shipping */
-        $shipping = $order->getDispatch();
-        $shippingAttribute = Shopware()->Models()->toArray( $shipping->getAttribute() );
-        $shippingId = $shippingAttribute[$shippingAttributeName];
-        // $shippingId = '04'; //$shipping->getAttribute();//TODO: Mapping for Delivery Types
+        $orderPositions[] = $this->getShipping($order, count($orderPositions));
 
         $cogitoOrderNumer = new CogitoOrderNumber($order->getNumber());
 
         $cogitoOrder = new CogitoOrder(
-            1,
+            (int) $this->configuration['companyNumber'],
             $cogitoOrderNumer->getSalehouseNumber(),
             $cogitoOrderNumer->getSection(),
             $cogitoOrderNumer->getOrderNumber(),
@@ -217,14 +191,14 @@ class CogitoApiService
             $order->getInvoiceAmount(),
             0,
             $order->getInvoiceAmount() - $order->getInvoiceAmountNet(),
-            $paymentId,
-            (int)$shippingId,
+            $this->getPaymentId($order),
+            $this->getShippingId($order),
             0,
             $order->getComment(),
             '',
             $order->getTransactionId(),
             $order->getTransactionId(),
-            'D',
+            $this->configuration['bakz'],
             $orderDiscounts,
             $orderPositions
         );
@@ -292,12 +266,24 @@ class CogitoApiService
         return $putOrderRequest->getResult();
     }
 
+    /**
+     * ...
+     */
     private function getConsultant()
     {
         return (int)Shopware()->Container()->get( "session" )->offsetGet( "ost-consultant" )['number'];
     }
 
-    private function getOrderPositionForDetail(int $position, Detail $detail)
+    /**
+     * ...
+     *
+     * @param integer $position
+     * @param Detail  $detail
+     * @param Order $order
+     *
+     * @return null|OrderPosition
+     */
+    private function getOrderPositionForDetail(int $position, Detail $detail, Order $order)
     {
         $articleDetail = $detail->getArticleDetail();
 
@@ -312,7 +298,7 @@ class CogitoApiService
 
         $positionType = 'E';
 
-        //If Articlenumber begins with ZU1 then its a Service
+        // if Articlenumber begins with ZU1 then its a Service
         if (strpos($detail->getArticleNumber(), 'ZU1') === 0) {
             $articleNumber = 132735;
             $positionType = 'D';
@@ -321,18 +307,6 @@ class CogitoApiService
         $serviceLevel = false ? 'LM' : 'LO'; //TODO: Replace false with Assembly check
 
         $desiredDate = $detail->getOrder()->getOrderTime()->format('Y-m-d');
-
-
-
-        $config = Shopware()->Config();
-        $shippingAttributeName = $config->getByNamespace('OstCogitoSoapApi', 'attributeShipping');
-
-        /** @var Shipping $shipping */
-        $shipping = $detail->getOrder()->getDispatch();
-        $shippingAttribute = Shopware()->Models()->toArray( $shipping->getAttribute() );
-        $shippingId = $shippingAttribute[$shippingAttributeName];
-
-
 
         return new OrderPosition(
             $position,
@@ -352,7 +326,7 @@ class CogitoApiService
             $this->getConsultant(),
             99,
             '',
-            (int)$shippingId,
+            $this->getShippingId($order),
             $desiredDate,
             'F',
             '',
@@ -360,8 +334,14 @@ class CogitoApiService
         );
     }
 
-
-
+    /**
+     * ...
+     *
+     * @param integer $position
+     * @param Detail  $detail
+     *
+     * @return null|OrderDiscount
+     */
     private function getOrderDiscountForDetail(int $position, Detail $detail)
     {
         $articleDetail = $detail->getArticleDetail();
@@ -379,15 +359,82 @@ class CogitoApiService
         }
 
         return new OrderDiscount(
-            $articleDetail->getAttribute()->getAttr1(),
+            (int)$articleDetail->getAttribute()->getAttr1(),
             0,
             0,
-            $articleDetail->getAttribute()->getAttr1(),
-            $discountKey,
+            (int)$articleDetail->getAttribute()->getAttr1(),
+            (int)$discountKey,
             $this->getConsultant(),
-            '012253',
+            (int)'012253',
             0.00,
-            number_format($detail->getPrice(), 2, '.', '')
+            (float)number_format($detail->getPrice(), 2, '.', '')
         );
+    }
+
+    /**
+     * ...
+     *
+     * @param Order $order
+     * @param integer $countPositions
+     *
+     * @return OrderPosition
+     */
+    private function getShipping(Order $order, int $countPositions)
+    {
+        // return as order position
+        return new OrderPosition(
+            $countPositions + 1,
+            0,
+            1,
+            1,
+            131186,
+            0,
+            '',
+            $order->getInvoiceShipping(),
+            'D',
+            0,
+            '',
+            '',
+            '',
+            '',
+            $this->getConsultant(),
+            99,
+            '',
+            0,
+            $order->getOrderTime()->format('Y-m-d'),
+            'F',
+            '',
+            'LO'
+        );
+    }
+
+    /**
+     * ...
+     *
+     * @param Order $order
+     *
+     * @return integer
+     */
+    private function getShippingId(Order $order): int
+    {
+        /** @var Shipping $shipping */
+        $shipping = $order->getDispatch();
+        $shippingAttribute = Shopware()->Models()->toArray( $shipping->getAttribute() );
+        return (int) $shippingAttribute[$this->configuration['attributeShipping']];
+    }
+
+    /**
+     * ...
+     *
+     * @param Order $order
+     *
+     * @return string
+     */
+    private function getPaymentId(Order $order): string
+    {
+        /** @var Payment $payment */
+        $payment = $order->getPayment();
+        $paymentAttribute = Shopware()->Models()->toArray( $payment->getAttribute() );
+        return (string) $paymentAttribute[$this->configuration['attributePayment']];
     }
 }

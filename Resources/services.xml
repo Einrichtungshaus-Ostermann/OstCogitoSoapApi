@@ -5,6 +5,13 @@
         http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
 
+        <!-- configuration -->
+        <service id="ost_cogito_soap_api.configuration" class="OstFoundation\Services\ConfigurationService">
+            <factory service="ost_foundation.services.configuration_service" method="getConfig"/>
+            <argument type="string">OstCogitoSoapApi</argument>
+        </service>
+
+        <!-- plugin services -->
         <service id="ost_cogito_soap_api.soap_api_request_service"
                  class="OstCogitoSoapApi\Bundles\OstCogitoSoapApiBundle\SoapApiRequestService">
         </service>

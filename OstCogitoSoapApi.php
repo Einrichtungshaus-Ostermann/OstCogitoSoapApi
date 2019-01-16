@@ -17,6 +17,9 @@
  * 1.1.0
  * - added shipping costs
  *
+ * 1.1.1
+ * - added more configuration options
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>

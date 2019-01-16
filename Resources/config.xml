@@ -20,12 +20,6 @@
             <description>Der WSDL Pfad für Bestellungen.</description>
         </element>
 
-        <element type="number" required="true" scope="shop">
-            <name>companyNumber</name>
-            <label>Firma</label>
-            <description>Welche Firma ist aktiv? 1 = Ostermann, 3 = Trends</description>
-        </element>
-
         <element type="text" required="true">
             <name>serverAddress</name>
             <label>Serveraddresse</label>
@@ -52,6 +46,61 @@
                 <option>
                     <value>OST_QSC</value>
                     <label>OST_QSC</label>
+                </option>
+            </store>
+        </element>
+
+        <element type="button">
+            <name>apiButton</name>
+            <label><![CDATA[<b>API Parameter Einstellungen</b>]]></label>
+        </element>
+
+        <element type="number" required="true" scope="shop">
+            <name>companyNumber</name>
+            <label>Firma</label>
+            <description>Welche Firma ist aktiv? 1 = Ostermann, 3 = Trends</description>
+        </element>
+
+        <element type="select" required="true">
+            <name>bakz</name>
+            <label>Auftragseingangsart</label>
+            <description>Die Auftragsart ?</description>
+            <store>
+                <option>
+                    <value>A</value>
+                    <label>Aufmaß</label>
+                </option>
+                <option>
+                    <value>D</value>
+                    <label>Direkterfassung</label>
+                </option>
+                <option>
+                    <value>F</value>
+                    <label>Per Fax</label>
+                </option>
+                <option>
+                    <value>I</value>
+                    <label>Internet</label>
+                </option>
+                <option>
+                    <value>K</value>
+                    <label>Übergabe aus KMP</label>
+                </option>
+                <option>
+                    <value>N</value>
+                    <label>Nacherfassung</label>
+                </option>
+                <option>
+                    <value>R</value>
+                    <label>Rückfrage Kunde</label>
+                </option>
+                <option>
+                    <value>S</value>
+                    <label>Schriftlich</label>
+                </option>
+                <option>
+                    <value>T</value>
+                    <label>Per Telefon</label>
                 </option>
             </store>
         </element>
