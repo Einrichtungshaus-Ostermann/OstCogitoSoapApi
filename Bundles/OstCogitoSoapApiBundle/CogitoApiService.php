@@ -224,7 +224,7 @@ class CogitoApiService
             '',
             $order->getTransactionId(),
             $order->getTransactionId(),
-            'I',
+            'D',
             $orderDiscounts,
             $orderPositions
         );
