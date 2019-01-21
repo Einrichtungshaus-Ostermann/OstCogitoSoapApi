@@ -33,6 +33,9 @@
  * - added environment for printer
  * - added debugging configuration for printer
  *
+ * 1.1.6
+ * - fixed environment for printer
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>

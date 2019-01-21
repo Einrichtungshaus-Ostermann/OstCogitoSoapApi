@@ -71,7 +71,7 @@ class PrintOrderRequest extends PrinterBaseApiRequest
                        <ikv:Prnt>' . $this->printer->getKey() . '</ikv:Prnt>
                        <ikv:Server>' . $this->serverAddress . '</ikv:Server>
                        <ikv:Spar>' . $this->orderNumber->getSection() . '</ikv:Spar>
-                       <ikv:Umgebung>' . $this->serverEnvironment . '</ikv:Umgebung>
+                       <ikv:Umgebung>' . $this->serverEnvironmentPrinter . '</ikv:Umgebung>
                        <ikv:Vkhs>' . $this->orderNumber->getSalehouseNumber() . '</ikv:Vkhs>
                     </tem:request>
                 </tem:PrintOrderData>';
