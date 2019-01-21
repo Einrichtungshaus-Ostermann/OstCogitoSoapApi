@@ -64,7 +64,7 @@ class PrintOrderRequest extends PrinterBaseApiRequest
 
     public function getRequestXML(): string
     {
-        return '<tem:PrintOrderData xmlns:ikv="http://schemas.datacontract.org/2004/07/IKVOrderImport" xmlns:tem="http://tempuri.org/">
+        $xml = '<tem:PrintOrderData xmlns:ikv="http://schemas.datacontract.org/2004/07/IKVOrderImport" xmlns:tem="http://tempuri.org/">
                     <tem:request>
                        <ikv:Aufn>' . $this->orderNumber->getOrderNumber() . '</ikv:Aufn>
                        <ikv:Firm>' . $this->companyNumber . '</ikv:Firm>
@@ -75,6 +75,15 @@ class PrintOrderRequest extends PrinterBaseApiRequest
                        <ikv:Vkhs>' . $this->orderNumber->getSalehouseNumber() . '</ikv:Vkhs>
                     </tem:request>
                 </tem:PrintOrderData>';
+
+
+        if ( (boolean) Shopware()->Container()->get( "ost_cogito_soap_api.configuration" )['debugLogStatus'] == true )
+        {
+            $filename = "printer-xml." . date( "Y-m-d-H-i-s" ) . "." . substr( md5(microtime()), 0, 8 ) . ".xml";
+            file_put_contents((string) Shopware()->Container()->get( "ost_cogito_soap_api.configuration" )['debugLogDirectory'] . $filename, $xml);
+        }
+
+        return $xml;
     }
 
     public function getRequestMethod(): string

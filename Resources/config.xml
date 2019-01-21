@@ -9,15 +9,15 @@
         </element>
 
         <element type="text" required="true" scope="shop">
-            <name>printerWsdlPath</name>
-            <label>WSDL Pfad - Drucker</label>
-            <description>Der WSDL Pfad für Drucker.</description>
-        </element>
-
-        <element type="text" required="true" scope="shop">
             <name>orderWsdlPath</name>
             <label>WSDL Pfad - Bestellungen</label>
             <description>Der WSDL Pfad für Bestellungen.</description>
+        </element>
+
+        <element type="text" required="true" scope="shop">
+            <name>printerWsdlPath</name>
+            <label>WSDL Pfad - Drucker</label>
+            <description>Der WSDL Pfad für Drucker.</description>
         </element>
 
         <element type="text" required="true">
@@ -28,7 +28,31 @@
 
         <element type="select" required="true">
             <name>serverEnvironment</name>
-            <label>Umgebung</label>
+            <label>Umgebung - Bestellungen</label>
+            <description>Welche Umgebung soll genutzt werden?</description>
+            <store>
+                <option>
+                    <value>OST_ECHT</value>
+                    <label>OST_ECHT</label>
+                </option>
+                <option>
+                    <value>OST_ECHT;RPG</value>
+                    <label>OST_ECHT;RPG</label>
+                </option>
+                <option>
+                    <value>OST_QSK;RPG</value>
+                    <label>OST_QSK;RPG</label>
+                </option>
+                <option>
+                    <value>OST_QSC</value>
+                    <label>OST_QSC</label>
+                </option>
+            </store>
+        </element>
+
+        <element type="select" required="true">
+            <name>serverEnvironmentPrinter</name>
+            <label>Umgebung - Drucker</label>
             <description>Welche Umgebung soll genutzt werden?</description>
             <store>
                 <option>
