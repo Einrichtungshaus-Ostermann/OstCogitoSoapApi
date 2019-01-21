@@ -36,6 +36,9 @@
  * 1.1.6
  * - fixed environment for printer
  *
+ * 1.1.7
+ * - fixed environment for printer
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>

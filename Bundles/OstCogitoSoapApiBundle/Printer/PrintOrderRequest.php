@@ -19,7 +19,7 @@ class PrintOrderRequest extends PrinterBaseApiRequest
     /**
      * @var string
      */
-    private $serverEnvironment;
+    private $serverEnvironmentPrinter;
 
     /**
      * @var CogitoPrinter
@@ -36,16 +36,16 @@ class PrintOrderRequest extends PrinterBaseApiRequest
      *
      * @param $companyNumber
      * @param $serverAddress
-     * @param $serverEnvironment
+     * @param $serverEnvironmentPrinter
      * @param CogitoPrinter $printer
      * @param CogitoOrderNumber $orderNumber
      */
-    public function __construct(string $companyNumber, string $serverAddress, string $serverEnvironment, CogitoPrinter $printer, CogitoOrderNumber $orderNumber)
+    public function __construct(string $companyNumber, string $serverAddress, string $serverEnvironmentPrinter, CogitoPrinter $printer, CogitoOrderNumber $orderNumber)
     {
         parent::__construct();
         $this->companyNumber = $companyNumber;
         $this->serverAddress = $serverAddress;
-        $this->serverEnvironment = $serverEnvironment;
+        $this->serverEnvironmentPrinter = $serverEnvironmentPrinter;
         $this->printer = $printer;
         $this->orderNumber = $orderNumber;
     }

@@ -17,21 +17,21 @@ class GetAllPrinterRequest extends PrinterBaseApiRequest
     /**
      * @var string
      */
-    private $serverEnvironment;
+    private $serverEnvironmentPrinter;
 
     /**
      * GetAllPrinterRequest constructor.
      *
      * @param string $companyNumber
      * @param string $serverAddress
-     * @param string $serverEnvironment
+     * @param string $serverEnvironmentPrinter
      */
-    public function __construct(string $companyNumber, string $serverAddress, string $serverEnvironment)
+    public function __construct(string $companyNumber, string $serverAddress, string $serverEnvironmentPrinter)
     {
         parent::__construct();
         $this->companyNumber = $companyNumber;
         $this->serverAddress = $serverAddress;
-        $this->serverEnvironment = $serverEnvironment;
+        $this->serverEnvironmentPrinter = $serverEnvironmentPrinter;
     }
 
     /**
@@ -89,7 +89,7 @@ class GetAllPrinterRequest extends PrinterBaseApiRequest
                         <tem:request>
                             <ikv:Firm>' . $this->companyNumber . '</ikv:Firm>
                             <ikv:Server>' . $this->serverAddress . '</ikv:Server>
-                            <ikv:Umgebung>' . $this->serverEnvironment . '</ikv:Umgebung>
+                            <ikv:Umgebung>' . $this->serverEnvironmentPrinter . '</ikv:Umgebung>
                         </tem:request>
                      </tem:GetAllPrinters>';
     }
