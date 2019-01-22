@@ -136,16 +136,23 @@
 
         <element type="text">
             <name>attributePayment</name>
-            <label>Zahlungsart</label>
+            <label>Zuordnung Zahlungsart</label>
             <value>ostcogitosoapapimapping</value>
             <description>In welchem Attribut der Zahlungsart steht die ID für die Cogito SOAP API?</description>
         </element>
 
         <element type="text">
             <name>attributeShipping</name>
-            <label>Versandart</label>
+            <label>Zuordnung Versandart</label>
             <value>ostcogitosoapapimapping</value>
             <description>In welchem Attribut der Versandart steht die ID für die Cogito SOAP API?</description>
+        </element>
+
+        <element type="text">
+            <name>attributeShippingIgnoreCosts</name>
+            <label>Übertragung von Versandkosten</label>
+            <value>ostcogitosoapapiignoreshippingcosts</value>
+            <description>In welchem boolean Attribut der Versandart ist definiert, ob der SOAP API -KEINE- Versandkosten übergeben werden sollen? Kostenlose Versandarten (z.B. Selbstabholung) sollten keine Versandkosten übergeben und das boolean Attribut aktiviert haben.</description>
         </element>
 
         <element type="button">
@@ -156,13 +163,13 @@
         <element type="boolean">
             <name>debugLogStatus</name>
             <label>Protokoll aktivieren</label>
-            <description>Sollen die .xml Dateien gespeichert werden? Der Dateiname folgt dem Schema: order_xml.Y-m-d-H-i-s.abcdefgh.xml</description>
+            <description>Sollen die .xml Dateien gespeichert werden? Der Dateiname folgt dem Schema: (order/printer)_xml.Y-m-d-H-i-s.abcdefgh.xml</description>
         </element>
 
         <element type="text">
             <name>debugLogDirectory</name>
             <label>Protokoll Ordner</label>
-            <description>In welchen Unterordner sollen die .xml Dateieng gespeichert werden? Standardmäßig werden die .xml Dateien im Shop Stammverzeichnis gespeichert.</description>
+            <description>In welchen Unterordner sollen die .xml Dateien gespeichert werden? Standardmäßig werden die .xml Dateien im Shop Stammverzeichnis gespeichert.</description>
         </element>
 
         <element type="button">

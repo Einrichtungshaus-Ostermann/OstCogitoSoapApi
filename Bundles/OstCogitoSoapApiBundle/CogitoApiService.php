@@ -178,77 +178,18 @@ class CogitoApiService
             }
         }
 
-        $orderPositions[] = $this->getShipping($order, count($orderPositions));
+        // add shipping
+        $orderPositions = $this->addShipping($order, $orderPositions);
 
-        $cogitoOrderNumer = new CogitoOrderNumber($order->getNumber());
+        // get order number
+        $cogitoOrderNumber = new CogitoOrderNumber($order->getNumber());
 
-        $cogitoOrder = new CogitoOrder(
-            (int) $this->configuration['companyNumber'],
-            $cogitoOrderNumer->getSalehouseNumber(),
-            $cogitoOrderNumer->getSection(),
-            $cogitoOrderNumer->getOrderNumber(),
-            $order->getOrderTime()->format('Y-m-d'),
-            $order->getInvoiceAmount(),
-            0,
-            $order->getInvoiceAmount() - $order->getInvoiceAmountNet(),
-            $this->getPaymentId($order),
-            $this->getShippingId($order),
-            0,
-            $order->getComment(),
-            '',
-            $order->getTransactionId(),
-            $order->getTransactionId(),
-            $this->configuration['bakz'],
-            $orderDiscounts,
-            $orderPositions
-        );
+        // get the order
+        $cogitoOrder = $this->getOrder($cogitoOrderNumber, $order, $orderPositions, $orderDiscounts);
 
-        /** @var Shipping $swShippingAddress */
-        $swShippingAddress = $order->getShipping();
-        /** @var Billing $swBillingAddress */
-        $swBillingAddress = $order->getBilling();
-
-        /** @var Shipping|Billing $swShippingBilling */
-        $swShippingBilling = $swBillingAddress ?? $swShippingAddress;
-        $swBillingShipping = $swShippingAddress ?? $swBillingAddress;
-
-        $billingAddress = new BillingAddress(
-            $swBillingShipping->getCustomer()->getBirthday() ?? '1970-01-01',
-            $swBillingShipping->getCity(),
-            $swBillingShipping->getCompany(),
-            $swBillingShipping->getCountry()->getIso(),
-            $swBillingShipping->getCustomer()->getEmail(),
-            $swBillingShipping->getFirstName(),
-            'EG',
-            '',
-            $swBillingShipping->getLastName(),
-            false,
-            $swBillingShipping->getPhone(),
-            $swBillingShipping->getPhone(),
-            $swBillingShipping->getPhone(),
-            (int)$swBillingShipping->getZipCode(),
-            $swBillingShipping->getSalutation(),
-            $swBillingShipping->getStreet()
-        );
-
-        $shippingAddress = new ShippingAddress(
-            $swShippingBilling->getCustomer()->getBirthday() ?? '1970-01-01',
-            $swShippingBilling->getCity(),
-            $swShippingBilling->getCompany(),
-            $swShippingBilling->getCountry()->getIso(),
-            $swShippingBilling->getCustomer()->getEmail(),
-            $swShippingBilling->getFirstName(),
-            'EG',
-            '',
-            $swShippingBilling->getLastName(),
-            false,
-            $swShippingBilling->getPhone(),
-            $swShippingBilling->getPhone(),
-            $swShippingBilling->getPhone(),
-            (int)$swShippingBilling->getZipCode(),
-            $swShippingBilling->getSalutation(),
-            $swShippingBilling->getStreet()
-        );
+        // get addresses
+        $billingAddress = $this->getBillingAddress($order);
+        $shippingAddress = $this->getShippingAddress($order);
 
         /** @var PutOrderRequest $getAllPrinterRequest */
         $putOrderRequest = $this->soapApiRequestService->getRequest(SoapApiRequestService::PUT_ORDER, [
@@ -369,6 +310,154 @@ class CogitoApiService
             0.00,
             (float)number_format($detail->getPrice(), 2, '.', '')
         );
+    }
+
+
+
+    /**
+     * ...
+     *
+     * @param CogitoOrderNumber $cogitoOrderNumber
+     * @param Order             $order
+     * @param array             $orderPositions
+     * @param array             $orderDiscounts
+     *
+     * @return CogitoOrder
+     */
+    private function getOrder(CogitoOrderNumber $cogitoOrderNumber, Order $order, array $orderPositions, array $orderDiscounts)
+    {
+        // create the order
+        $cogitoOrder = new CogitoOrder(
+            (int) $this->configuration['companyNumber'],
+            $cogitoOrderNumber->getSalehouseNumber(),
+            $cogitoOrderNumber->getSection(),
+            $cogitoOrderNumber->getOrderNumber(),
+            $order->getOrderTime()->format('Y-m-d'),
+            $order->getInvoiceAmount(),
+            0,
+            $order->getInvoiceAmount() - $order->getInvoiceAmountNet(),
+            $this->getPaymentId($order),
+            $this->getShippingId($order),
+            0,
+            $order->getComment(),
+            '',
+            $order->getTransactionId(),
+            $order->getTransactionId(),
+            $this->configuration['bakz'],
+            $orderDiscounts,
+            $orderPositions
+        );
+
+        // return it
+        return $cogitoOrder;
+    }
+
+    /**
+     * ...
+     *
+     * @param Order $order
+     *
+     * @return BillingAddress
+     */
+    private function getBillingAddress(Order $order)
+    {
+        /** @var Shipping $swShippingAddress */
+        $swShippingAddress = $order->getShipping();
+        /** @var Billing $swBillingAddress */
+        $swBillingAddress = $order->getBilling();
+
+        /** @var Shipping|Billing $swBillingShipping */
+        $swBillingShipping = $swShippingAddress ?? $swBillingAddress;
+
+        // create address
+        $billingAddress = new BillingAddress(
+            $swBillingShipping->getCustomer()->getBirthday() ?? '1970-01-01',
+            $swBillingShipping->getCity(),
+            $swBillingShipping->getCompany(),
+            $swBillingShipping->getCountry()->getIso(),
+            $swBillingShipping->getCustomer()->getEmail(),
+            $swBillingShipping->getFirstName(),
+            'EG',
+            '',
+            $swBillingShipping->getLastName(),
+            false,
+            $swBillingShipping->getPhone(),
+            $swBillingShipping->getPhone(),
+            $swBillingShipping->getPhone(),
+            (int)$swBillingShipping->getZipCode(),
+            $swBillingShipping->getSalutation(),
+            $swBillingShipping->getStreet()
+        );
+
+        // return it
+        return $billingAddress;
+    }
+
+    /**
+     * ...
+     *
+     * @param Order $order
+     *
+     * @return ShippingAddress
+     */
+    private function getShippingAddress(Order $order)
+    {
+        /** @var Shipping $swShippingAddress */
+        $swShippingAddress = $order->getShipping();
+        /** @var Billing $swBillingAddress */
+        $swBillingAddress = $order->getBilling();
+
+        /** @var Shipping|Billing $swShippingBilling */
+        $swShippingBilling = $swBillingAddress ?? $swShippingAddress;
+
+        // create the address
+        $shippingAddress = new ShippingAddress(
+            $swShippingBilling->getCustomer()->getBirthday() ?? '1970-01-01',
+            $swShippingBilling->getCity(),
+            $swShippingBilling->getCompany(),
+            $swShippingBilling->getCountry()->getIso(),
+            $swShippingBilling->getCustomer()->getEmail(),
+            $swShippingBilling->getFirstName(),
+            'EG',
+            '',
+            $swShippingBilling->getLastName(),
+            false,
+            $swShippingBilling->getPhone(),
+            $swShippingBilling->getPhone(),
+            $swShippingBilling->getPhone(),
+            (int)$swShippingBilling->getZipCode(),
+            $swShippingBilling->getSalutation(),
+            $swShippingBilling->getStreet()
+        );
+
+        // return the address
+        return $shippingAddress;
+    }
+
+    /**
+     * ...
+     *
+     * @param Order $order
+     * @param array $orderPositions
+     *
+     * @return array
+     */
+    private function addShipping(Order $order, array $orderPositions)
+    {
+        /** @var Shipping $shipping */
+        $shipping = $order->getDispatch();
+        $shippingAttribute = Shopware()->Models()->toArray( $shipping->getAttribute() );
+
+        // do we want to ignore the shipping costs?
+        if ( (boolean) $shippingAttribute[$this->configuration['attributeShippingIgnoreCosts']] == true)
+            // stop
+            return $orderPositions;
+
+        // add the shipping
+        $orderPositions[] = $this->getShipping($order, count($orderPositions));
+
+        // and return it
+        return $orderPositions;
     }
 
     /**

@@ -3,7 +3,7 @@
 /**
  * Einrichtungshaus Ostermann GmbH & Co. KG - Cogito Soap Api
  *
- * A Connector for the Cogito Soap API
+ * A connector for the Cogito SOAP API.
  *
  * 1.0.0
  * - initial release
@@ -38,6 +38,9 @@
  *
  * 1.1.7
  * - fixed environment for printer
+ *
+ * 1.2.0
+ * - added configuration to ignore shipping costs and to not send them via api
  *
  * @package   OstCogitoSoapApi
  *
