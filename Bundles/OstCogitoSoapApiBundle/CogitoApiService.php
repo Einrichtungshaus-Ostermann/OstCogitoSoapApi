@@ -70,7 +70,16 @@ class CogitoApiService
             return [];
         }
 
-        return $printOrderRequest->getResult();
+        $result = $printOrderRequest->getResult();
+
+        if ( (boolean) Shopware()->Container()->get( "ost_cogito_soap_api.configuration" )['debugLogStatus'] == true )
+        {
+            $data = print_r($result,true);
+            $filename = "printer-xml." . date( "Y-m-d-H-i-s" ) . "." . substr( md5((string) $cogitoOrderNumber->getOrderNumber() . (string) $cogitoPrinter->getKey()), 0, 8 ) . "-response.xml";
+            file_put_contents((string) Shopware()->Container()->get( "ost_cogito_soap_api.configuration" )['debugLogDirectory'] . $filename, $data);
+        }
+
+        return $result;
     }
 
     /**
@@ -204,7 +213,16 @@ class CogitoApiService
             return [];
         }
 
-        return $putOrderRequest->getResult();
+        $result = $putOrderRequest->getResult();
+
+        if ( (boolean) Shopware()->Container()->get( "ost_cogito_soap_api.configuration" )['debugLogStatus'] == true )
+        {
+            $data = print_r($result,true);
+            $filename = "order-xml." . date( "Y-m-d-H-i-s" ) . "." . substr( (string) $cogitoOrder->getOrderNumber(), 0, 8 ) . "-response.xml";
+            file_put_contents((string) Shopware()->Container()->get( "ost_cogito_soap_api.configuration" )['debugLogDirectory'] . $filename,$data);
+        }
+
+        return $result;
     }
 
     /**

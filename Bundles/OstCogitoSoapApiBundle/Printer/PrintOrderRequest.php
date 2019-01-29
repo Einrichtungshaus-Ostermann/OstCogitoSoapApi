@@ -79,7 +79,7 @@ class PrintOrderRequest extends PrinterBaseApiRequest
 
         if ( (boolean) Shopware()->Container()->get( "ost_cogito_soap_api.configuration" )['debugLogStatus'] == true )
         {
-            $filename = "printer-xml." . date( "Y-m-d-H-i-s" ) . "." . substr( md5(microtime()), 0, 8 ) . ".xml";
+            $filename = "printer-xml." . date( "Y-m-d-H-i-s" ) . "." . substr( md5((string) $this->orderNumber->getOrderNumber() . (string) $this->printer->getKey()), 0, 8 ) . "-request.xml";
             file_put_contents((string) Shopware()->Container()->get( "ost_cogito_soap_api.configuration" )['debugLogDirectory'] . $filename, $xml);
         }
 

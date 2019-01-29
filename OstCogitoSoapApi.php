@@ -44,6 +44,7 @@
  *
  * 1.2.1
  * - added OST_QSK to environment configuration
+ * - added response to xml logs
  *
  * @package   OstCogitoSoapApi
  *
