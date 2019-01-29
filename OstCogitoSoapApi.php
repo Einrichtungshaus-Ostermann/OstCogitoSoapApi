@@ -42,6 +42,9 @@
  * 1.2.0
  * - added configuration to ignore shipping costs and to not send them via api
  *
+ * 1.2.1
+ * - added OST_QSK to environment configuration
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>

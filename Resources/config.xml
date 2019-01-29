@@ -40,6 +40,10 @@
                     <label>OST_ECHT;RPG</label>
                 </option>
                 <option>
+                    <value>OST_QSK</value>
+                    <label>OST_QSK</label>
+                </option>
+                <option>
                     <value>OST_QSK;RPG</value>
                     <label>OST_QSK;RPG</label>
                 </option>
@@ -62,6 +66,10 @@
                 <option>
                     <value>OST_ECHT;RPG</value>
                     <label>OST_ECHT;RPG</label>
+                </option>
+                <option>
+                    <value>OST_QSK</value>
+                    <label>OST_QSK</label>
                 </option>
                 <option>
                     <value>OST_QSK;RPG</value>
