@@ -398,7 +398,7 @@ abstract class AbstractAddress implements SoapApiPart
                 <ikv:PhonePrivate>' . $this->phonePrivate . '</ikv:PhonePrivate>
                 <ikv:PhoneWork>' . $this->phoneWork . '</ikv:PhoneWork>
                 <ikv:PostalCode>' . $this->postalCode . '</ikv:PostalCode>
-                <ikv:Salutation>'.($this->salutation === 'mr' ? 'Herr' : 'Frau').'</ikv:Salutation>
+                <ikv:Salutation>'.($this->salutation === 'mr' ? '01' : '02').'</ikv:Salutation>
                 <ikv:Street>' . $this->street . '</ikv:Street>';
     }
 }

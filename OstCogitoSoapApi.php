@@ -49,6 +49,9 @@
  * 1.2.2
  * - added auto completion for print backend controller tests
  *
+ * 1.2.3
+ * - fixed salutation in address xml
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>
