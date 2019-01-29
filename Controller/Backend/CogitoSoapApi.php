@@ -21,9 +21,14 @@ class CogitoSoapApi extends Shopware_Controllers_Backend_ExtJs implements \Shopw
 
     public function printOrderAction()
     {
+        $printerKey = $this->request->get('printerKey');
+
+        if ( substr_count($printerKey, "PRT") == 0)
+            $printerKey = "PRT" . $printerKey;
+
         $apiService = $this->container->get('ost_cogito_soap_api.cogito_api_service');
 
-        $printOrderResult = $apiService->printOrder($this->request->get('orderNumber'), $this->request->get('printerKey'));
+        $printOrderResult = $apiService->printOrder($this->request->get('orderNumber'), $printerKey);
 
         /* @noinspection PhpParamsInspection */
         $this->View()->assign(['success' => true, 'data' => $printOrderResult, 'total' => count($printOrderResult)]);

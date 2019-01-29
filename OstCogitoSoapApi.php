@@ -46,6 +46,9 @@
  * - added OST_QSK to environment configuration
  * - added response to xml logs
  *
+ * 1.2.2
+ * - added auto completion for print backend controller tests
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>
