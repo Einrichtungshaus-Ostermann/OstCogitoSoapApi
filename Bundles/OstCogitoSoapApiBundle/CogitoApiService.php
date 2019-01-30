@@ -352,7 +352,7 @@ class CogitoApiService
             $cogitoOrderNumber->getOrderNumber(),
             $order->getOrderTime()->format('Y-m-d'),
             $order->getInvoiceAmount(),
-            0,
+            $this->getAdvancePayment($order),
             $order->getInvoiceAmount() - $order->getInvoiceAmountNet(),
             $this->getPaymentId($order),
             $this->getShippingId($order),
@@ -543,5 +543,24 @@ class CogitoApiService
         $payment = $order->getPayment();
         $paymentAttribute = Shopware()->Models()->toArray( $payment->getAttribute() );
         return (string) $paymentAttribute[$this->configuration['attributePayment']];
+    }
+
+    /**
+     * ...
+     *
+     * @param Order $order
+     *
+     * @return float
+     */
+    private function getAdvancePayment(Order $order): float
+    {
+        /* @var $loader \Shopware\Bundle\AttributeBundle\Service\DataLoader */
+        $loader = Shopware()->Container()->get("shopware_attribute.data_loader");
+
+        // get the attributes for the order with underscore names
+        $attributes = $loader->load("s_order_attributes", $order->getId());
+
+        // advance payment via configuration
+        return (float) $attributes[$this->configuration['attributeOrderAdvancePayment']];
     }
 }

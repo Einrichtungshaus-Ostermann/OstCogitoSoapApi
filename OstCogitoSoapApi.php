@@ -52,6 +52,9 @@
  * 1.2.3
  * - fixed salutation in address xml
  *
+ * 1.2.4
+ * - added advance payment to the api
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>

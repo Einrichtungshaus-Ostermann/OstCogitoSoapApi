@@ -163,6 +163,13 @@
             <description>In welchem boolean Attribut der Versandart ist definiert, ob der SOAP API -KEINE- Versandkosten übergeben werden sollen? Kostenlose Versandarten (z.B. Selbstabholung) sollten keine Versandkosten übergeben und das boolean Attribut aktiviert haben.</description>
         </element>
 
+        <element type="text">
+            <name>attributeOrderAdvancePayment</name>
+            <label>Anzahlung</label>
+            <value>ost_consultant_advance_payment</value>
+            <description>In welchem Attribut der Bestellung steht die Anzahlung in Euro?</description>
+        </element>
+
         <element type="button">
             <name>debugButton</name>
             <label><![CDATA[<b>Debug Einstellungen</b>]]></label>
