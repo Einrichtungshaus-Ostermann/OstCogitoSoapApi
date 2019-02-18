@@ -174,18 +174,75 @@ class CogitoApiService
 
         /** @var Detail $orderDetail */
         foreach ($order->getDetails() as $position => $orderDetail) {
-            $orderPosition = $this->getOrderPositionForDetail($position + 1, $orderDetail, $order);
-            if ($orderPosition !== null) {
-                $orderPositions[] = $orderPosition;
+            // ignore every discount and get the discount for an article later
+            if ($this->isDiscount($orderDetail))
+                // next
                 continue;
-            }
 
+            // get the article
+            $orderPosition = $this->getOrderPositionForDetail($position + 1, $orderDetail, $order);
+
+            // none found?
+            if ($orderPosition === null)
+                // stop here
+                continue;
+
+            // add it
+            $orderPositions[] = $orderPosition;
+
+            // try to find a discount
             $orderDiscount = $this->getOrderDiscountForDetail($position + 1, $orderDetail);
+
+            // do we have a discount?!
             if ($orderDiscount !== null) {
+                // add it
                 $orderDiscounts[] = $orderDiscount;
                 continue;
             }
+
         }
+
+
+
+
+
+        // fake base discount
+
+
+
+
+        // 330 -> KOPF PROZENT 10% facebook küchen
+        // 140 -> KOPF ABSOLUT 4,- sondernachlass
+
+
+
+        /*
+        // 10 % facebook kopf discount
+        $discountKey = "330";
+        
+        $consultant = $this->getConsultant();
+        $confirmingConsultant = "012253";
+
+        $discount = new OrderDiscount(
+            1,
+            0,
+            0,
+            1,
+            (int)$discountKey,
+            (int) $consultant,
+            (int)$confirmingConsultant,
+            10.00,
+            (float)0
+        );
+
+        $orderDiscounts[] = $discount;
+        */
+
+
+
+
+
+
 
         // add shipping
         $orderPositions = $this->addShipping($order, $orderPositions);
@@ -224,6 +281,16 @@ class CogitoApiService
 
         return $result;
     }
+
+    /**
+     * ...
+     */
+    private function isDiscount(Detail $detail)
+    {
+        // return by attribute
+        return (boolean) $this->getOrderDetailAttribute($detail, $this->configuration['attributeDiscountStatus']);
+    }
+
 
     /**
      * ...
@@ -303,30 +370,43 @@ class CogitoApiService
      */
     private function getOrderDiscountForDetail(int $position, Detail $detail)
     {
-        $articleDetail = $detail->getArticleDetail();
+        // try to find a discount for this parent
+        $query = "
+            SELECT attribute.*
+            FROM s_order_details AS detail
+                LEFT JOIN s_order_details_attributes AS attribute
+                    ON detail.id = attribute.detailID
+            WHERE detail.ordernumber = :ordernumber
+                AND ost_consultant_discount_status = 1
+                AND ost_consultant_discount_parent_number = :parentNumber
+        ";
+        $arr = Shopware()->Db()->fetchRow($query, array('ordernumber' => $detail->getNumber(), 'parentNumber' => $detail->getArticleNumber()));
 
-        if ($articleDetail === null) {
+        // do we have a discount?!
+        if (!is_array($arr)) {
+            // we dont
             return null;
         }
 
-        if (strpos($detail->getArticleNumber(), 'GU') === 0) {
-            $discountKey = '507';
-        } elseif (strpos($detail->getArticleNumber(), 'NL') === 0) {
-            $discountKey = '622';
-        } else {
-            return null;
-        }
+        // get the type and value
+        $type = (string)$arr[$this->configuration['attributeDiscountType']];
+        $value = (float)$arr[$this->configuration['attributeDiscountValue']];
+        $number = (int)$arr[$this->configuration['attributeDiscountNumber']];
 
+        // company... should be read from the article
+        $company = (int) Shopware()->Container()->get('ost_foundation.configuration')['company'];
+
+        // create a discount
         return new OrderDiscount(
-            (int)$articleDetail->getAttribute()->getAttr1(),
+            $company,
+            $position,
             0,
-            0,
-            (int)$articleDetail->getAttribute()->getAttr1(),
-            (int)$discountKey,
+            $company,
+            $number,
             $this->getConsultant(),
             (int)'012253',
-            0.00,
-            (float)number_format($detail->getPrice(), 2, '.', '')
+            ( $type == "P" ) ? (float) $value : 0.0,
+            ( $type == "A" ) ? (float) $value : 0.0
         );
     }
 
@@ -562,5 +642,31 @@ class CogitoApiService
 
         // advance payment via configuration
         return (float) $attributes[$this->configuration['attributeOrderAdvancePayment']];
+    }
+
+
+    /**
+     * ...
+     *
+     * @param Detail $detail
+     * @param string $key
+     *
+     * @return mixed
+     */
+    private function getOrderDetailAttribute(Detail $detail, $key = null)
+    {
+        /* @var $loader \Shopware\Bundle\AttributeBundle\Service\DataLoader */
+        $loader = Shopware()->Container()->get("shopware_attribute.data_loader");
+
+        // get the attributes for the order with underscore names
+        $attributes = $loader->load("s_order_details_attributes", $detail->getId());
+
+        // no specific key set?
+        if ($key === null)
+            // return default
+            return $attributes;
+
+        // return for specific key
+        return $attributes[$key];
     }
 }

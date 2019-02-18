@@ -55,6 +55,9 @@
  * 1.2.4
  * - added advance payment to the api
  *
+ * 1.3.0
+ * - added discounts to the api
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>
