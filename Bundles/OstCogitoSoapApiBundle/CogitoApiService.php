@@ -172,15 +172,18 @@ class CogitoApiService
         /** @var OrderDiscount[] $orderDiscounts */
         $orderDiscounts = [];
 
+        // position
+        $position = 1;
+
         /** @var Detail $orderDetail */
-        foreach ($order->getDetails() as $position => $orderDetail) {
+        foreach ($order->getDetails() as $orderDetail) {
             // ignore every discount and get the discount for an article later
             if ($this->isDiscount($orderDetail))
                 // next
                 continue;
 
             // get the article
-            $orderPosition = $this->getOrderPositionForDetail($position + 1, $orderDetail, $order);
+            $orderPosition = $this->getOrderPositionForDetail($position, $orderDetail, $order);
 
             // none found?
             if ($orderPosition === null)
@@ -191,7 +194,10 @@ class CogitoApiService
             $orderPositions[] = $orderPosition;
 
             // try to find a discount
-            $orderDiscount = $this->getOrderDiscountForDetail($position + 1, $orderDetail);
+            $orderDiscount = $this->getOrderDiscountForDetail($position, $orderDetail);
+
+            // ...
+            $position++;
 
             // do we have a discount?!
             if ($orderDiscount !== null) {
@@ -205,7 +211,7 @@ class CogitoApiService
         $headDiscounts = $this->getOrderHeadDiscounts($order);
 
         // loop them
-        foreach ( $headDiscounts as $headDiscount ) {
+        foreach ($headDiscounts as $headDiscount) {
             // add it
             array_push($orderDiscounts, $headDiscount);
         }
@@ -389,7 +395,7 @@ class CogitoApiService
                 AND ost_consultant_discount_status = 1
                 AND ost_consultant_discount_parent_number IN('','0')
         ";
-        $arr = Shopware()->Db()->fetchRow($query, array('ordernumber' => $order->getNumber()));
+        $arr = Shopware()->Db()->fetchAll($query, array('ordernumber' => $order->getNumber()));
 
         // do we have a discount?!
         if (!is_array($arr)) {
@@ -421,7 +427,7 @@ class CogitoApiService
                 $this->getConsultant(),
                 $this->getDiscountConfirmingConsultant($order, $this->getConsultant()),
                 ( $type == "P" ) ? (float) $value : 0.0,
-                ( $type == "A" ) ? (float) $value : 0.0
+                ( $type == "A" ) ? ((float) $value * (-1)) : 0.0
             );
 
             // add it
@@ -481,7 +487,7 @@ class CogitoApiService
             $this->getConsultant(),
             $this->getDiscountConfirmingConsultant($detail->getOrder(), $this->getConsultant()),
             ( $type == "P" ) ? (float) $value : 0.0,
-            ( $type == "A" ) ? (float) $value : 0.0
+            ( $type == "A" ) ? ((float) $value * (-1)) : 0.0
         );
     }
 
