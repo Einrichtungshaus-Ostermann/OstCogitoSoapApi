@@ -68,6 +68,9 @@
  * - added floor to customer address
  * - added configuration for shipping position
  *
+ * 1.3.4
+ * - fixed versioning
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>
