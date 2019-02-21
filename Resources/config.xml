@@ -138,6 +138,39 @@
         </element>
 
         <element type="button">
+            <name>shippingButton</name>
+            <label><![CDATA[<b>Versandkosten</b>]]></label>
+        </element>
+
+        <element type="text">
+            <name>shippingArticleNumber</name>
+            <label>Artikelnummer</label>
+            <value>131186</value>
+            <description>Die Artikelnummer der Position.</description>
+        </element>
+
+        <element type="text">
+            <name>shippingType</name>
+            <label>Positionsart</label>
+            <value>D</value>
+            <description>Die Positionsart.</description>
+        </element>
+
+        <element type="text">
+            <name>shippingDesiredDateType</name>
+            <label>Terminart</label>
+            <value>F</value>
+            <description>Die Terminart der Position.</description>
+        </element>
+
+        <element type="text">
+            <name>shippingServiceType</name>
+            <label>Servicegrad</label>
+            <value>LO</value>
+            <description>Der Servicegrad der Position.</description>
+        </element>
+
+        <element type="button">
             <name>attributeShippingPaymentButton</name>
             <label><![CDATA[<b>Attribute Zahlungs- / Versandarten</b>]]></label>
         </element>

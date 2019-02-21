@@ -671,12 +671,12 @@ class CogitoApiService
             $countPositions + 1,
             0,
             1,
-            1,
-            131186,
+            (int) Shopware()->Container()->get('ost_foundation.configuration')['company'],
+            (int) $this->configuration['shippingArticleNumber'],
             0,
             '',
             $order->getInvoiceShipping(),
-            'D',
+            (string) $this->configuration['shippingType'],
             0,
             '',
             '',
@@ -687,9 +687,9 @@ class CogitoApiService
             '',
             0,
             $order->getOrderTime()->format('Y-m-d'),
-            'F',
+            (string) $this->configuration['shippingDesiredDateType'],
             '',
-            'LO'
+            (string) $this->configuration['shippingServiceType']
         );
     }
 

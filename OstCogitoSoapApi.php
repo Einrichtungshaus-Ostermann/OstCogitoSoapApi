@@ -66,6 +66,7 @@
  *
  * 1.3.3
  * - added floor to customer address
+ * - added configuration for shipping position
  *
  * @package   OstCogitoSoapApi
  *
