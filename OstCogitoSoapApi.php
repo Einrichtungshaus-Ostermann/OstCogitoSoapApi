@@ -64,6 +64,9 @@
  * 1.3.2
  * - fixed head discounts
  *
+ * 1.3.3
+ * - added floor to customer address
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>
