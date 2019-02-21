@@ -167,8 +167,7 @@
             <name>attributeAdvancePaymentButton</name>
             <label><![CDATA[<b>Attribute Anzahlungen</b>]]></label>
         </element>
-
-
+        
         <element type="text">
             <name>attributeOrderAdvancePayment</name>
             <label>Anzahlung</label>
@@ -176,12 +175,10 @@
             <description>In welchem Attribut der Bestellung (s_order_attributes) steht die Anzahlung in Euro?</description>
         </element>
 
-
         <element type="button">
             <name>attributeDiscountButton</name>
             <label><![CDATA[<b>Attribute Nachlässe</b>]]></label>
         </element>
-
 
         <element type="text">
             <name>attributeDiscountStatus</name>
@@ -190,14 +187,12 @@
             <description>In welchem Attribut der Artikel einer Bestellung (s_order_details_attributes) ist der Artikel als Nachlass definiert?</description>
         </element>
 
-
         <element type="text">
             <name>attributeDiscountNumber</name>
             <label>Schlüssel</label>
             <value>ost_consultant_discount_number</value>
             <description>In welchem Attribut des Artikels ist der Schlüssel des Nachlasses hinterlegt?</description>
         </element>
-
 
         <element type="text">
             <name>attributeDiscountType</name>
@@ -213,19 +208,12 @@
             <description>In welchem Attribut des Artikels ist der Wert des Nachlasses hinterlegt?</description>
         </element>
 
-
-
-
-
-
         <element type="text">
             <name>attributeDiscountParentNumber</name>
             <label>Vater</label>
             <value>ost_consultant_discount_parent_number</value>
             <description>In welchem Attribut des Artikels ist die Artikelnummer des Vaters hinterlegt? Auf diesen Artikel bezieht sich der Nachlass.</description>
         </element>
-
-
 
         <element type="button">
             <name>debugButton</name>

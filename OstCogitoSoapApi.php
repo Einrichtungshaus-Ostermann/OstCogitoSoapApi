@@ -58,6 +58,9 @@
  * 1.3.0
  * - added discounts to the api
  *
+ * 1.3.1
+ * - fixed head discounts
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>

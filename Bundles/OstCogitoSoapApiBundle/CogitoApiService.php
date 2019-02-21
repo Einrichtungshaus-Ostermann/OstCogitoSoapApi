@@ -199,7 +199,15 @@ class CogitoApiService
                 $orderDiscounts[] = $orderDiscount;
                 continue;
             }
+        }
 
+        // get order head discounts
+        $headDiscounts = $this->getOrderHeadDiscounts($order);
+
+        // loop them
+        foreach ( $headDiscounts as $headDiscount ) {
+            // add it
+            array_push($orderDiscounts, $headDiscount);
         }
 
 
@@ -360,6 +368,73 @@ class CogitoApiService
         );
     }
 
+
+
+    /**
+     * ...
+     *
+     * @param Order $order
+     *
+     * @return array
+     */
+    private function getOrderHeadDiscounts(Order $order)
+    {
+        // try to find a discount for this parent
+        $query = "
+            SELECT attribute.*
+            FROM s_order_details AS detail
+                LEFT JOIN s_order_details_attributes AS attribute
+                    ON detail.id = attribute.detailID
+            WHERE detail.ordernumber = :ordernumber
+                AND ost_consultant_discount_status = 1
+                AND ost_consultant_discount_parent_number IN('','0')
+        ";
+        $arr = Shopware()->Db()->fetchRow($query, array('ordernumber' => $order->getNumber()));
+
+        // do we have a discount?!
+        if (!is_array($arr)) {
+            // we dont
+            return array();
+        }
+
+        // every discount
+        $discounts = array();
+
+        // company... should be read from the article
+        $company = (int) Shopware()->Container()->get('ost_foundation.configuration')['company'];
+
+        // loop every db head discount
+        foreach ( $arr as $aktu )
+        {
+            // get the type and value
+            $type = (string)$aktu[$this->configuration['attributeDiscountType']];
+            $value = (float)$aktu[$this->configuration['attributeDiscountValue']];
+            $number = (int)$aktu[$this->configuration['attributeDiscountNumber']];
+
+            // create a head discount
+            $discount = new OrderDiscount(
+                $company,
+                0,
+                0,
+                $company,
+                $number,
+                $this->getConsultant(),
+                $this->getDiscountConfirmingConsultant($order, $this->getConsultant()),
+                ( $type == "P" ) ? (float) $value : 0.0,
+                ( $type == "A" ) ? (float) $value : 0.0
+            );
+
+            // add it
+            array_push($discounts, $discount);
+        }
+
+        // return them
+        return $discounts;
+    }
+
+
+
+
     /**
      * ...
      *
@@ -404,11 +479,28 @@ class CogitoApiService
             $company,
             $number,
             $this->getConsultant(),
-            (int)'012253',
+            $this->getDiscountConfirmingConsultant($detail->getOrder(), $this->getConsultant()),
             ( $type == "P" ) ? (float) $value : 0.0,
             ( $type == "A" ) ? (float) $value : 0.0
         );
     }
+
+
+
+    /**
+     * ...
+     *
+     * @param Order $order
+     * @param int $consulant
+     *
+     * @return int
+     */
+    private function getDiscountConfirmingConsultant(Order $order, $consulant)
+    {
+        // default hohmeier...
+        return (int) '012253';
+    }
+
 
 
 
