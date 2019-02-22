@@ -573,7 +573,7 @@ class CogitoApiService
             $swBillingShipping->getCountry()->getIso(),
             $swBillingShipping->getCustomer()->getEmail(),
             $swBillingShipping->getFirstName(),
-            (string) $swBillingShipping->getAdditionalAddressLine1(),
+            $this->parseFloor((string) $swBillingShipping->getAdditionalAddressLine1()),
             '',
             $swBillingShipping->getLastName(),
             false,
@@ -614,7 +614,7 @@ class CogitoApiService
             $swShippingBilling->getCountry()->getIso(),
             $swShippingBilling->getCustomer()->getEmail(),
             $swShippingBilling->getFirstName(),
-            (string) $swShippingBilling->getAdditionalAddressLine1(),
+            $this->parseFloor((string) $swShippingBilling->getAdditionalAddressLine1()),
             '',
             $swShippingBilling->getLastName(),
             false,
@@ -628,6 +628,28 @@ class CogitoApiService
 
         // return the address
         return $shippingAddress;
+    }
+
+    /**
+     * ...
+     *
+     * @param string $floor
+     *
+     * @return string
+     */
+    private function parseFloor($floor): string
+    {
+        if ($floor == "Erdgeschoss") return "EG";
+        if (substr_count($floor, "1.") > 0) return "01";
+        if (substr_count($floor, "2.") > 0) return "02";
+        if (substr_count($floor, "3.") > 0) return "03";
+        if (substr_count($floor, "4.") > 0) return "04";
+        if (substr_count($floor, "5.") > 0) return "05";
+        if (substr_count($floor, "6.") > 0) return "06";
+        if (substr_count($floor, "7.") > 0) return "07";
+        if (substr_count($floor, "8.") > 0) return "08";
+        if (substr_count($floor, "9.") > 0) return "09";
+        return "10";
     }
 
     /**

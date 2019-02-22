@@ -71,6 +71,9 @@
  * 1.3.4
  * - fixed versioning
  *
+ * 1.3.5
+ * - added floor converter
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>
