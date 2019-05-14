@@ -74,6 +74,9 @@
  * 1.3.5
  * - added floor converter
  *
+ * 1.3.6
+ * - fixed inverted billing and shipping address
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>

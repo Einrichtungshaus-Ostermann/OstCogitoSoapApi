@@ -563,7 +563,7 @@ class CogitoApiService
         $swBillingAddress = $order->getBilling();
 
         /** @var Shipping|Billing $swBillingShipping */
-        $swBillingShipping = $swShippingAddress ?? $swBillingAddress;
+        $swBillingShipping = $swBillingAddress ?? $swShippingAddress;
 
         // create address
         $billingAddress = new BillingAddress(
@@ -604,7 +604,7 @@ class CogitoApiService
         $swBillingAddress = $order->getBilling();
 
         /** @var Shipping|Billing $swShippingBilling */
-        $swShippingBilling = $swBillingAddress ?? $swShippingAddress;
+        $swShippingBilling = $swShippingAddress ?? $swBillingAddress;
 
         // create the address
         $shippingAddress = new ShippingAddress(
