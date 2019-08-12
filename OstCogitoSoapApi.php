@@ -77,6 +77,9 @@
  * 1.3.6
  * - fixed inverted billing and shipping address
  *
+ * 1.3.7
+ * - added avad to the api
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>

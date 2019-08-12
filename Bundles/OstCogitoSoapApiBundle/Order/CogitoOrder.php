@@ -86,6 +86,11 @@ class CogitoOrder implements SoapApiPart
      */
     protected $orderEntryType;
 
+    /**
+     * @var string
+     */
+    protected $customerNotificationType;
+
     /** @var OrderDiscount[] */
     protected $orderDiscounts;
 
@@ -111,10 +116,11 @@ class CogitoOrder implements SoapApiPart
      * @param string $internalPaymentReference
      * @param string $externalPaymentReference
      * @param string $orderEntryType
+     * @param string $customerNotificationType
      * @param OrderDiscount[] $orderDiscounts
      * @param OrderPosition[] $orderPositions
      */
-    public function __construct(int $companyNumber, int $storeKey, int $division, int $orderNumber, string $orderDate, float $totalOrderValue, float $depositValue, float $orderVAT, string $paymentType, int $deliveryType, int $pickupStore, string $comment, string $externalOrderId, string $internalPaymentReference, string $externalPaymentReference, string $orderEntryType, array $orderDiscounts, array $orderPositions)
+    public function __construct(int $companyNumber, int $storeKey, int $division, int $orderNumber, string $orderDate, float $totalOrderValue, float $depositValue, float $orderVAT, string $paymentType, int $deliveryType, int $pickupStore, string $comment, string $externalOrderId, string $internalPaymentReference, string $externalPaymentReference, string $orderEntryType, string $customerNotificationType, array $orderDiscounts, array $orderPositions)
     {
         $this->companyNumber = $companyNumber;
         $this->storeKey = $storeKey;
@@ -132,6 +138,7 @@ class CogitoOrder implements SoapApiPart
         $this->internalPaymentReference = $internalPaymentReference;
         $this->externalPaymentReference = $externalPaymentReference;
         $this->orderEntryType = $orderEntryType;
+        $this->customerNotificationType = $customerNotificationType;
         $this->orderDiscounts = $orderDiscounts;
         $this->orderPositions = $orderPositions;
     }
@@ -433,6 +440,7 @@ class CogitoOrder implements SoapApiPart
                       <ikv:Anzl>' . $this->depositValue . '</ikv:Anzl>
                       <ikv:Aufn>' . $this->orderNumber . '</ikv:Aufn>
                       <ikv:Bakz>' . $this->orderEntryType . '</ikv:Bakz>
+                      <ikv:Avad>' . $this->customerNotificationType . '</ikv:Avad>
                       <ikv:Date>' . $this->orderDate . '</ikv:Date>
                       <ikv:Firm>' . $this->companyNumber . '</ikv:Firm>
                       <ikv:Lart>' . $this->deliveryType . '</ikv:Lart>

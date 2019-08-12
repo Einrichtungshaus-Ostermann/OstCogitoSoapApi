@@ -540,6 +540,7 @@ class CogitoApiService
             $order->getTransactionId(),
             $order->getTransactionId(),
             $this->configuration['bakz'],
+            $this->getCustomerNotificationType($order),
             $orderDiscounts,
             $orderPositions
         );
@@ -764,6 +765,24 @@ class CogitoApiService
         return (float) $attributes[$this->configuration['attributeOrderAdvancePayment']];
     }
 
+    /**
+     * ...
+     *
+     * @param Order $order
+     *
+     * @return string
+     */
+    private function getCustomerNotificationType(Order $order): string
+    {
+        /* @var $loader \Shopware\Bundle\AttributeBundle\Service\DataLoader */
+        $loader = Shopware()->Container()->get("shopware_attribute.data_loader");
+
+        // get the attributes for the order with underscore names
+        $attributes = $loader->load("s_order_attributes", $order->getId());
+
+        // advance payment via configuration
+        return (string) $attributes[$this->configuration['attributeCustomerNotificationType']];
+    }
 
     /**
      * ...

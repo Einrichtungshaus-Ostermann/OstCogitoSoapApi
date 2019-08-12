@@ -197,6 +197,18 @@
         </element>
 
         <element type="button">
+            <name>attributeCustomerNotificationTypeButton</name>
+            <label><![CDATA[<b>Attribute Benachrichtigungsart</b>]]></label>
+        </element>
+
+        <element type="text">
+            <name>attributeCustomerNotificationType</name>
+            <label>Benachrichtigungsart</label>
+            <value>ost_consultant_customer_notification_type</value>
+            <description>In welchem Attribut der Bestellung (s_order_attributes) steht das Kennzeichen der Benachrichtigungsart?</description>
+        </element>
+
+        <element type="button">
             <name>attributeAdvancePaymentButton</name>
             <label><![CDATA[<b>Attribute Anzahlungen</b>]]></label>
         </element>
