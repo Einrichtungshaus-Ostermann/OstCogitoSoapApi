@@ -439,8 +439,8 @@ class CogitoOrder implements SoapApiPart
         $xmlString = '<ikv:OrderInput>
                       <ikv:Anzl>' . $this->depositValue . '</ikv:Anzl>
                       <ikv:Aufn>' . $this->orderNumber . '</ikv:Aufn>
-                      <ikv:Bakz>' . $this->orderEntryType . '</ikv:Bakz>
                       <ikv:Avad>' . $this->customerNotificationType . '</ikv:Avad>
+                      <ikv:Bakz>' . $this->orderEntryType . '</ikv:Bakz>
                       <ikv:Date>' . $this->orderDate . '</ikv:Date>
                       <ikv:Firm>' . $this->companyNumber . '</ikv:Firm>
                       <ikv:Lart>' . $this->deliveryType . '</ikv:Lart>

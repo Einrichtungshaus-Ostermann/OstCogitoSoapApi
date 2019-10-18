@@ -80,6 +80,9 @@
  * 1.3.7
  * - added avad to the api
  *
+ * 1.3.8
+ * - fixed service level
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>

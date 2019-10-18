@@ -338,13 +338,34 @@ class CogitoApiService
 
         $positionType = 'E';
 
+
+
+        // by default
+        $serviceLevel = 'LO';
+
+        // this position has
+        if ($this->hasAssembly($detail)) {
+            // fix service level
+            $serviceLevel = 'LM';
+        }
+
         // if Articlenumber begins with ZU1 then its a Service
         if (strpos($detail->getArticleNumber(), 'ZU1') === 0) {
             $articleNumber = 132735;
             $positionType = 'D';
+            $serviceLevel = 'AW';
         }
 
-        $serviceLevel = false ? 'LM' : 'LO'; //TODO: Replace false with Assembly check
+        // get the cogito shipping id
+        $shippingId = $this->getShippingId($order);
+
+        // these are always self pickup as service level
+        if ($shippingId === 2 || $shippingId === 12) {
+            // set this service
+            $serviceLevel = 'AW';
+        }
+
+
 
         $desiredDate = $detail->getOrder()->getOrderTime()->format('Y-m-d');
 
@@ -807,5 +828,18 @@ class CogitoApiService
 
         // return for specific key
         return $attributes[$key];
+    }
+
+    /**
+     * ...
+     *
+     * @param Detail $detail
+     *
+     * @return boolean
+     */
+    private function hasAssembly(Detail $detail)
+    {
+        // return by attribute
+        return (boolean) $this->getOrderDetailAttribute($detail, 'ost_article_assembly_surcharge_status');
     }
 }
