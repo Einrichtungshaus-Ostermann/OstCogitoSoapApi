@@ -83,6 +83,9 @@
  * 1.3.8
  * - fixed service level
  *
+ * 1.3.9
+ * - added desired date
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>

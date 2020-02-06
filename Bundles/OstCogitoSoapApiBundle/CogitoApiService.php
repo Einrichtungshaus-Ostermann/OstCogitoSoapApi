@@ -365,10 +365,7 @@ class CogitoApiService
             $serviceLevel = 'AW';
         }
 
-
-
-        $desiredDate = $detail->getOrder()->getOrderTime()->format('Y-m-d');
-
+        // create order position
         return new OrderPosition(
             $position,
             0,
@@ -388,7 +385,7 @@ class CogitoApiService
             99,
             '',
             $this->getShippingId($order),
-            $desiredDate,
+            $this->getDesiredDate($order),
             'F',
             '',
             $serviceLevel
@@ -735,6 +732,24 @@ class CogitoApiService
             '',
             (string) $this->configuration['shippingServiceType']
         );
+    }
+
+    /**
+     * ...
+     *
+     * @param Order $order
+     *
+     * @return string
+     */
+    private function getDesiredDate(Order $order): string
+    {
+        $attributes = Shopware()->Models()->toArray( $order->getAttribute() );
+        $date = (string) $attributes[$this->configuration['attributePickupDate']];
+        $arr = explode('.', $date);
+        if (count($arr) != 3) {
+            return $order->getOrderTime()->format('Y-m-d');
+        }
+        return $arr[2] . '-' . str_pad($arr[1], 2, '0', STR_PAD_LEFT) . '-' . str_pad($arr[0], 2, '0', STR_PAD_LEFT);
     }
 
     /**
