@@ -86,6 +86,9 @@
  * 1.3.9
  * - added desired date
  *
+ * 1.3.10
+ * - fixed desired date
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>

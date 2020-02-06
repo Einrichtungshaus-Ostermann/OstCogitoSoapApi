@@ -743,12 +743,25 @@ class CogitoApiService
      */
     private function getDesiredDate(Order $order): string
     {
-        $attributes = Shopware()->Models()->toArray( $order->getAttribute() );
+        /* @var $loader \Shopware\Bundle\AttributeBundle\Service\DataLoader */
+        $loader = Shopware()->Container()->get("shopware_attribute.data_loader");
+
+        // get the attributes for the order with underscore names
+        $attributes = $loader->load("s_order_attributes", $order->getId());
+
+        // get the date
         $date = (string) $attributes[$this->configuration['attributePickupDate']];
+
+        // split it
         $arr = explode('.', $date);
+
+        // invalid?
         if (count($arr) != 3) {
+            // order date
             return $order->getOrderTime()->format('Y-m-d');
         }
+
+        // format it
         return $arr[2] . '-' . str_pad($arr[1], 2, '0', STR_PAD_LEFT) . '-' . str_pad($arr[0], 2, '0', STR_PAD_LEFT);
     }
 
