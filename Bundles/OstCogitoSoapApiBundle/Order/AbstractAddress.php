@@ -384,11 +384,17 @@ abstract class AbstractAddress implements SoapApiPart
 
     public function getXML(): string
     {
+        // remove dummy email
+        $email = (substr_count('dummy-', $this->email) > 0 && substr_count('@ostermann.de', $this->email) > 0)
+            ? ''
+            : $this->email;
+
+        // return xml
         return '<ikv:Birthday xsi:nil="true">'.$this->birthday.'</ikv:Birthday>
                 <ikv:City>' . $this->city . '</ikv:City>
                 <ikv:Company>' . $this->company . '</ikv:Company>
                 <ikv:CountryCode>' . $this->countryCode . '</ikv:CountryCode>
-                <ikv:Email>' . $this->email . '</ikv:Email>
+                <ikv:Email>' . $email . '</ikv:Email>
                 <ikv:FirstName>' . $this->firstName . '</ikv:FirstName>
                 <ikv:Floor>' . $this->floor . '</ikv:Floor>
                 <ikv:Housenumber>' . $this->houseNumber . '</ikv:Housenumber>
