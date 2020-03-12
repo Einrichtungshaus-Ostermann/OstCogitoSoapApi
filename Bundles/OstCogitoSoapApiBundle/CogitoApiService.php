@@ -386,7 +386,7 @@ class CogitoApiService
             '',
             $this->getShippingId($order),
             $this->getDesiredDate($order),
-            'F',
+            $this->getDesiredDateType($order),
             '',
             $serviceLevel
         );
@@ -752,6 +752,12 @@ class CogitoApiService
         // get the date
         $date = (string) $attributes[$this->configuration['attributePickupDate']];
 
+        // week?
+        if (substr_count($date, 'KW') > 0) {
+            // return week
+            return (string) trim(str_replace('KW', '', $date));
+        }
+
         // split it
         $arr = explode('.', $date);
 
@@ -764,6 +770,31 @@ class CogitoApiService
         // format it
         return $arr[2] . '-' . str_pad($arr[1], 2, '0', STR_PAD_LEFT) . '-' . str_pad($arr[0], 2, '0', STR_PAD_LEFT);
     }
+
+    /**
+     * ...
+     *
+     * @param Order $order
+     *
+     * @return string
+     */
+    private function getDesiredDateType(Order $order): string
+    {
+        /* @var $loader \Shopware\Bundle\AttributeBundle\Service\DataLoader */
+        $loader = Shopware()->Container()->get("shopware_attribute.data_loader");
+
+        // get the attributes for the order with underscore names
+        $attributes = $loader->load("s_order_attributes", $order->getId());
+
+        // get the date
+        $date = (string) $attributes[$this->configuration['attributePickupDate']];
+
+        // depending on 'KW'
+        return (substr_count($date, 'KW') > 0)
+            ? 'W'
+            : 'F';
+    }
+
 
     /**
      * ...

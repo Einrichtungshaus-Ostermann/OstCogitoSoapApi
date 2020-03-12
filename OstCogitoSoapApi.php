@@ -92,6 +92,9 @@
  * 1.3.11
  * - removed dummy email address
  *
+ * 1.3.12
+ * - added week to desired date
+ *
  * @package   OstCogitoSoapApi
  *
  * @author    Tim Windelschmidt <tim.windelschmidt@ostermann.de>

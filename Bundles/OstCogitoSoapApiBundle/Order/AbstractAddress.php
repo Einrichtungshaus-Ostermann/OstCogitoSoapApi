@@ -389,7 +389,6 @@ abstract class AbstractAddress implements SoapApiPart
             ? ''
             : $this->email;
 
-        // return xml
         return '<ikv:Birthday xsi:nil="true">'.$this->birthday.'</ikv:Birthday>
                 <ikv:City>' . $this->city . '</ikv:City>
                 <ikv:Company>' . $this->company . '</ikv:Company>
